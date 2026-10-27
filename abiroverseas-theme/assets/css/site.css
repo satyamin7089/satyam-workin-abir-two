@@ -839,8 +839,8 @@ body {
 .ab-contact-page .ab-contact-submit,
 .ab-contact-page button[type="submit"],
 .ab-contact-page input[type="submit"] {
-    background-color: var(--ab-orange);
-    border-color: var(--ab-orange);
+    background-color: #bd5400;
+    border-color: #bd5400;
     color: #fff;
     box-shadow: 0 7px 18px rgba(245, 130, 32, .2);
 }
@@ -853,8 +853,8 @@ body {
 .ab-contact-page .ab-contact-submit:hover,
 .ab-contact-page button[type="submit"]:hover,
 .ab-contact-page input[type="submit"]:hover {
-    background-color: #df7115;
-    border-color: #df7115;
+    background-color: #a64900;
+    border-color: #a64900;
     color: #fff;
     box-shadow: 0 10px 24px rgba(245, 130, 32, .25);
 }
