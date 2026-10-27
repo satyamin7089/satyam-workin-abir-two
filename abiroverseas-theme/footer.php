@@ -19,6 +19,10 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
     <svg class="ab-icon" aria-hidden="true"><use href="#ab-icon-phone" /></svg>
     Phone: <a href="tel:+18565233366" class="ab-footer-contact-link">+1 (856) 523 3366</a>
   </span>
+  <span class="ab-footer-whatsapp-line">
+    <svg class="ab-icon" aria-hidden="true"><use href="#ab-icon-whatsapp" /></svg>
+    WhatsApp: <a href="https://wa.me/18565233366" class="ab-footer-contact-link ab-footer-whatsapp" target="_blank" rel="noopener noreferrer">+1 (856) 523 3366</a>
+  </span>
 </div>
       </div>
       <nav class="ab-footer-nav" aria-label="Footer product navigation">
