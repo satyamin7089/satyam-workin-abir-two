@@ -1812,3 +1812,272 @@ body { margin: 0; }
         background: #f58220;
     }
 }
+
+
+/* =========================================================================
+   SECTION RHYTHM SYSTEM (v1.5.0)
+   -------------------------------------------------------------------------
+   One vertical rhythm for the furniture inside every section of every page:
+
+       eyebrow --14px--> heading --16px--> paragraph --20px--> points/action
+
+   and one gap (42px) between a section's heading block and the content under
+   it. The values step down once at tablet and once at phone, so a section is
+   never tight on one page and loose on another.
+
+   Why this block exists: each page stylesheet used to state its own numbers
+   (eyebrow with no gap at all, headings with 12–18px, paragraphs with 18–28px,
+   section heads ending at 40/42/46px). This is the single owner now.
+   ========================================================================= */
+
+:root {
+    /* Gap from the eyebrow to the heading under it. */
+    --ab-rhythm-eyebrow: 14px;
+    /* Heading to the paragraph that explains it. */
+    --ab-rhythm-heading: 16px;
+    /* Paragraph to the points list or the action button. */
+    --ab-rhythm-body: 20px;
+    /* Between repeated points inside a list. */
+    --ab-rhythm-points: 10px;
+    /* Heading block to the cards / panel under it. */
+    --ab-rhythm-head: 42px;
+}
+
+@media (max-width: 1100px) {
+    :root {
+        --ab-rhythm-eyebrow: 13px;
+        --ab-rhythm-heading: 15px;
+        --ab-rhythm-body: 18px;
+        --ab-rhythm-points: 9px;
+        --ab-rhythm-head: 34px;
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --ab-rhythm-eyebrow: 12px;
+        --ab-rhythm-heading: 13px;
+        --ab-rhythm-body: 16px;
+        --ab-rhythm-points: 8px;
+        --ab-rhythm-head: 26px;
+    }
+}
+
+/* 1. The containers that hold a section's eyebrow, heading, paragraph and
+      action — banners, section heads and two-column copy panels. */
+:is(.ab-section-head,
+    .ab-contact-intro,
+    .ab-products-section-head,
+    .ab-promise-copy,
+    .ab-story-copy,
+    .ab-reach-copy,
+    .ab-final-copy,
+    .ab-industry-copy,
+    .ab-faq-side-sticky,
+    .ab-overview-copy,
+    .ab-primary-copy,
+    .ab-secondary-copy,
+    .ab-selection-copy,
+    .ab-support-copy,
+    .ab-comparison-copy,
+    .ab-credibility-copy,
+    .ab-strength-copy,
+    .ab-enquiry-copy,
+    .kh-enquiry-copy,
+    .ab-about-hero-copy,
+    .ab-contact-hero-copy,
+    .ab-hero-copy,
+    .ab-prod-copy,
+    .ab-products-hero-copy,
+    .kh-article-hero-copy,
+    .ab-home-slide--copy,
+    .ab-contact-aside-heading,
+    .ab-contact-form-heading) > * {
+    margin-top: 0;
+}
+
+/* 2. Eyebrow to heading. The eyebrow is inline-flex, where a vertical margin
+      does nothing, so it becomes a fit-content block here — same look, and
+      the gap finally exists. */
+:is(.ab-section-head,
+    .ab-contact-intro,
+    .ab-products-section-head,
+    .ab-promise-copy,
+    .ab-story-copy,
+    .ab-reach-copy,
+    .ab-final-copy,
+    .ab-industry-copy,
+    .ab-faq-side-sticky,
+    .ab-overview-copy,
+    .ab-primary-copy,
+    .ab-secondary-copy,
+    .ab-selection-copy,
+    .ab-support-copy,
+    .ab-comparison-copy,
+    .ab-credibility-copy,
+    .ab-strength-copy,
+    .ab-enquiry-copy,
+    .kh-enquiry-copy,
+    .ab-about-hero-copy,
+    .ab-contact-hero-copy,
+    .ab-hero-copy,
+    .ab-prod-copy,
+    .ab-products-hero-copy,
+    .kh-article-hero-copy,
+    .ab-home-slide--copy,
+    .ab-contact-aside-heading,
+    .ab-contact-form-heading) > .ab-eyebrow {
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    margin-bottom: var(--ab-rhythm-eyebrow);
+}
+
+/* 2b. The product directory banner scopes its eyebrow rule to the page wrapper,
+       which is one class more specific than the shared rule above. */
+.ab-products-page .ab-products-hero-copy > .ab-eyebrow {
+    margin-bottom: var(--ab-rhythm-eyebrow);
+}
+
+/* 3. Heading to paragraph. */
+:is(.ab-section-head,
+    .ab-contact-intro,
+    .ab-products-section-head,
+    .ab-promise-copy,
+    .ab-story-copy,
+    .ab-reach-copy,
+    .ab-final-copy,
+    .ab-industry-copy,
+    .ab-faq-side-sticky,
+    .ab-overview-copy,
+    .ab-primary-copy,
+    .ab-secondary-copy,
+    .ab-selection-copy,
+    .ab-support-copy,
+    .ab-comparison-copy,
+    .ab-credibility-copy,
+    .ab-strength-copy,
+    .ab-enquiry-copy,
+    .kh-enquiry-copy,
+    .ab-about-hero-copy,
+    .ab-contact-hero-copy,
+    .ab-hero-copy,
+    .ab-prod-copy,
+    .ab-products-hero-copy,
+    .kh-article-hero-copy,
+    .ab-home-slide--copy,
+    .ab-contact-aside-heading,
+    .ab-contact-form-heading) > :is(h1, h2, h3, h4) {
+    margin: 0 0 var(--ab-rhythm-heading);
+}
+
+/* 4. Paragraph to the next paragraph, points list or action. */
+:is(.ab-section-head,
+    .ab-contact-intro,
+    .ab-products-section-head,
+    .ab-promise-copy,
+    .ab-story-copy,
+    .ab-reach-copy,
+    .ab-final-copy,
+    .ab-industry-copy,
+    .ab-faq-side-sticky,
+    .ab-overview-copy,
+    .ab-primary-copy,
+    .ab-secondary-copy,
+    .ab-selection-copy,
+    .ab-support-copy,
+    .ab-comparison-copy,
+    .ab-credibility-copy,
+    .ab-strength-copy,
+    .ab-enquiry-copy,
+    .kh-enquiry-copy,
+    .ab-about-hero-copy,
+    .ab-contact-hero-copy,
+    .ab-hero-copy,
+    .ab-prod-copy,
+    .ab-products-hero-copy,
+    .kh-article-hero-copy,
+    .ab-home-slide--copy,
+    .ab-contact-aside-heading,
+    .ab-contact-form-heading) > p {
+    margin: 0 0 var(--ab-rhythm-body);
+}
+
+/* 4b. `p.lead` carries an extra class in the page sheets, so it needs the same
+       specificity to inherit the shared paragraph gap. */
+:is(.ab-section-head,
+    .ab-contact-intro,
+    .ab-products-section-head,
+    .ab-promise-copy,
+    .ab-story-copy,
+    .ab-reach-copy,
+    .ab-final-copy,
+    .ab-industry-copy,
+    .ab-faq-side-sticky,
+    .ab-about-hero-copy,
+    .ab-contact-hero-copy,
+    .ab-hero-copy,
+    .ab-prod-copy,
+    .ab-products-hero-copy,
+    .kh-article-hero-copy,
+    .ab-home-slide--copy) > p.lead {
+    margin: 0 0 var(--ab-rhythm-body);
+}
+
+/* 5. Nothing trails an empty gap at the end of a heading block. */
+:is(.ab-section-head,
+    .ab-contact-intro,
+    .ab-products-section-head,
+    .ab-promise-copy,
+    .ab-story-copy,
+    .ab-reach-copy,
+    .ab-final-copy,
+    .ab-industry-copy,
+    .ab-faq-side-sticky,
+    .ab-overview-copy,
+    .ab-primary-copy,
+    .ab-secondary-copy,
+    .ab-selection-copy,
+    .ab-support-copy,
+    .ab-comparison-copy,
+    .ab-credibility-copy,
+    .ab-strength-copy,
+    .ab-enquiry-copy,
+    .kh-enquiry-copy,
+    .ab-about-hero-copy,
+    .ab-contact-hero-copy,
+    .ab-hero-copy,
+    .ab-prod-copy,
+    .ab-products-hero-copy,
+    .kh-article-hero-copy,
+    .ab-home-slide--copy,
+    .ab-contact-aside-heading,
+    .ab-contact-form-heading) > :last-child {
+    margin-bottom: 0;
+}
+
+/* 6. One gap between a heading block and the content beneath it. */
+.ab-section-head,
+.ab-head-row,
+.ab-contact-intro,
+.ab-products-section-head {
+    margin-bottom: var(--ab-rhythm-head);
+}
+
+/* The step grid closes the way-section; it follows the intro block. */
+.ab-way-grid {
+    margin-top: var(--ab-rhythm-head);
+}
+
+/* 7. Points inside the theme's card lists share one gap. */
+.ab-pillar ul,
+.ab-why-card ul,
+.ab-promise-list {
+    gap: var(--ab-rhythm-points);
+}
+
+/* When the promise list is the second column of the promise grid, the grid
+   gap already separates it from the copy. */
+.ab-promise-grid > .ab-promise-list {
+    margin-top: 0;
+}
