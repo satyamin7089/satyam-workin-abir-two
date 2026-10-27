@@ -818,6 +818,8 @@ body {
 .kh-button,
 .kh-filter .kh-button,
 .ab-contact-page .ab-contact-submit,
+.ab-contact-page .ab-contact-form .ab-contact-submit,
+.ab-contact-page .ab-contact-form button[type="submit"],
 .ab-contact-page button[type="submit"],
 .ab-contact-page input[type="submit"] {
     min-height: 50px;
@@ -837,6 +839,8 @@ body {
 .kh-button,
 .kh-filter .kh-button,
 .ab-contact-page .ab-contact-submit,
+.ab-contact-page .ab-contact-form .ab-contact-submit,
+.ab-contact-page .ab-contact-form button[type="submit"],
 .ab-contact-page button[type="submit"],
 .ab-contact-page input[type="submit"] {
     background-color: #bd5400;
@@ -851,6 +855,8 @@ body {
 .kh-button:hover,
 .kh-filter .kh-button:hover,
 .ab-contact-page .ab-contact-submit:hover,
+.ab-contact-page .ab-contact-form .ab-contact-submit:hover,
+.ab-contact-page .ab-contact-form button[type="submit"]:hover,
 .ab-contact-page button[type="submit"]:hover,
 .ab-contact-page input[type="submit"]:hover {
     background-color: #a64900;
