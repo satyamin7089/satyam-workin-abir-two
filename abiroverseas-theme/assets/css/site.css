@@ -1283,20 +1283,23 @@ body { margin: 0; }
     box-shadow: 0 4px 10px rgba(245, 130, 32, .12);
 }
 
-.ab-btn--whatsapp {
-    background: #25d366;
-    color: #fff;
-    box-shadow: 0 8px 20px rgba(37, 211, 102, .26);
+/* WhatsApp channel tile in the contact banner (sits after "Call our team").
+   WhatsApp keeps its own green accent; email and phone use the orange one. */
+.ab-contact-hero-meta .ab-contact-meta-mark--whatsapp {
+    background: #e9f9ef;
+    color: #1eb257;
+    box-shadow: 0 4px 10px rgba(30, 178, 87, .14);
 }
 
-.ab-btn--whatsapp:hover {
-    background: #1eb257;
-    color: #fff;
+.ab-contact-hero-meta .ab-contact-meta-mark--whatsapp .ab-icon {
+    width: 19px;
+    height: 19px;
+    color: #1eb257;
+    stroke-width: 1.6;
 }
 
-.ab-btn--whatsapp .ab-icon {
-    width: 20px;
-    height: 20px;
+.ab-contact-hero-meta > a.ab-contact-meta-item--whatsapp:hover .ab-contact-meta-mark--whatsapp {
+    background: #d8f4e3;
 }
 
 .ab-footer-contact .ab-footer-whatsapp {
@@ -1304,9 +1307,6 @@ body { margin: 0; }
     text-decoration: none;
 }
 
-.ab-contact-page .ab-btn--whatsapp {
-    text-decoration: none;
-}
 
 /* WhatsApp keeps its own green accent in the footer contact list. */
 .ab-footer-contact .ab-footer-whatsapp-line .ab-icon {
@@ -1404,4 +1404,268 @@ body { margin: 0; }
 .kh-article-hero {
     padding-top: var(--ab-banner-pad);
     padding-bottom: var(--ab-banner-pad);
+}
+
+
+/* =========================================================================
+   BANNER EDGE ALIGNMENT (v1.4.5)
+   -------------------------------------------------------------------------
+   The right-hand image must start exactly where the copy starts (its eyebrow)
+   and end exactly where the last piece of copy ends. So the row height is no
+   longer a fixed minimum: it is driven by the copy itself, the copy is top
+   aligned, and the image column simply stretches to that same height. Both
+   columns therefore share one top edge and one bottom edge on every banner
+   (Home, About, Contact, Material, Product Families/Range, Knowledge).
+   ========================================================================= */
+
+@media (min-width: 1025px) {
+    .ab-hero-grid,
+    .ab-about-hero-grid,
+    .ab-contact-hero-grid,
+    .ab-prod-hero-grid,
+    .ab-products-hero-grid,
+    .kh-hero-grid,
+    .kh-article-hero-layout {
+        /* The copy defines the row; no artificial minimum height. */
+        grid-template-rows: auto;
+        align-items: stretch;
+        align-content: start;
+    }
+
+    /* Copy starts at the top of the row: the eyebrow is the first edge. */
+    .ab-hero-copy,
+    .ab-about-hero-copy,
+    .ab-contact-hero-copy,
+    .ab-prod-copy,
+    .ab-products-hero-copy,
+    .kh-hero-grid > div:first-child,
+    .kh-article-hero-copy {
+        justify-content: flex-start;
+        align-self: stretch;
+    }
+
+    /* Image / gallery / note ends where the copy ends. */
+    .ab-home-slide .ab-hero-art,
+    .ab-about-hero .ab-about-hero-art,
+    .ab-contact-hero .ab-contact-hero-art,
+    .ab-products-hero .ab-products-hero-art,
+    .kh-hero .kh-hero-note,
+    .kh-article-hero .kh-article-featured,
+    .ab-prod-hero .ab-product-gallery {
+        height: auto;
+        min-height: 0;
+        align-self: stretch;
+    }
+
+    /* The article featured image keeps filling its (copy-height) area. */
+    .kh-article-hero .kh-article-featured {
+        aspect-ratio: auto;
+    }
+
+    .kh-article-hero .kh-article-featured .kh-featured-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+
+/* =========================================================================
+   TABLET PORTRAIT / MOBILE BANNER MEDIA
+   -------------------------------------------------------------------------
+   A 500px tall image on phones and tablets keeps the banner media from looking
+   like a wide landscape strip, for images and for both sliders (home gallery
+   and the material product gallery).
+   ========================================================================= */
+
+@media (max-width: 1024px) {
+    .ab-home-slide .ab-hero-art,
+    .ab-home-slide--final .ab-hero-art--rotating,
+    .ab-about-hero .ab-about-hero-art,
+    .ab-contact-hero .ab-contact-hero-art,
+    .ab-products-hero .ab-products-hero-art,
+    .kh-article-hero .kh-article-featured {
+        height: 500px;
+        min-height: 500px;
+        max-height: none;
+        aspect-ratio: auto;
+    }
+
+    /* Material slider: 500px picture with the thumbnail rail underneath. */
+    .ab-prod-hero .ab-product-gallery {
+        height: auto;
+        min-height: 0;
+        grid-template-rows: auto auto;
+        gap: 12px;
+    }
+
+    .ab-prod-hero .ab-product-gallery .ab-prod-art {
+        height: 500px;
+        min-height: 500px;
+    }
+}
+
+@media (max-width: 600px) {
+    .ab-home-slide .ab-hero-art,
+    .ab-home-slide--final .ab-hero-art--rotating,
+    .ab-about-hero .ab-about-hero-art,
+    .ab-contact-hero .ab-contact-hero-art,
+    .ab-products-hero .ab-products-hero-art,
+    .kh-article-hero .kh-article-featured,
+    .ab-prod-hero .ab-product-gallery .ab-prod-art {
+        height: 500px;
+        min-height: 500px;
+    }
+}
+
+
+/* =========================================================================
+   ABOUT — FAQ SECTION ON TABLET / MOBILE
+   -------------------------------------------------------------------------
+   Eyebrow, heading, filter tabs and the help card stay together at the top of
+   the section and the FAQ list sits below them. The help card button is auto
+   width on tablet portrait instead of stretching across the full column.
+   ========================================================================= */
+
+@media (max-width: 1024px) {
+    .ab-faq-section .ab-faq-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 30px;
+        align-items: start;
+    }
+
+    .ab-faq-section .ab-faq-side {
+        order: 1;
+    }
+
+    .ab-faq-section .ab-faq-main {
+        order: 2;
+    }
+
+    .ab-faq-section .ab-faq-side-sticky {
+        position: static;
+        top: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    /* Tabs read as a row of chips above the list, never a full-width column. */
+    .ab-faq-section .ab-faq-filter-pills {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: visible;
+        padding: 0;
+        background: none;
+        box-shadow: none;
+    }
+
+    .ab-faq-section .ab-faq-tab {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 100%;
+        padding: 9px 14px;
+        border-radius: 999px;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    /* "Start an enquiry" must not stretch full width on tablet portrait. */
+    .ab-faq-section .ab-faq-help-actions {
+        align-items: flex-start;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 14px;
+    }
+
+    .ab-faq-section .ab-faq-help-actions .ab-btn {
+        width: auto;
+        max-width: 100%;
+        flex: 0 0 auto;
+        min-height: 48px;
+        padding: 12px 18px;
+        white-space: normal;
+        text-align: center;
+    }
+
+    .ab-faq-section .ab-faq-help-card {
+        max-width: 100%;
+    }
+}
+
+
+/* =========================================================================
+   MATERIAL PAGES — "READY WHEN YOU ARE" CARD
+   -------------------------------------------------------------------------
+   Tablet portrait: the copy sits on top and its three buttons move below it,
+   wrapping onto two rows instead of squeezing into the right-hand corner.
+   ========================================================================= */
+
+@media (max-width: 1024px) {
+    .ab-secondary-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+
+    .ab-secondary-copy {
+        max-width: 100%;
+    }
+
+    .ab-secondary-actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 10px;
+        flex: 1 1 auto;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .ab-secondary-actions .ab-btn {
+        flex: 0 0 auto;
+        width: auto;
+        padding: 12px 16px;
+        font-size: 16px;
+    }
+}
+
+
+/* =========================================================================
+   CONTACT PAGE — SECOND SECTION ALIGNMENT
+   -------------------------------------------------------------------------
+   On tablet portrait and below the intro block sits top-left with the form
+   instead of being centred.
+   ========================================================================= */
+
+@media (max-width: 1024px) {
+    .ab-contact-page .ab-contact-intro {
+        max-width: 100%;
+        margin: 0 0 28px;
+        text-align: left;
+    }
+
+    .ab-contact-page .ab-contact-intro > p {
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .ab-contact-page .ab-contact-notice {
+        margin-left: 0;
+        margin-right: 0;
+        max-width: 100%;
+    }
+
+    .ab-contact-page .ab-contact-layout {
+        align-items: start;
+    }
+
+    .ab-contact-page .ab-contact-aside,
+    .ab-contact-page .ab-contact-form {
+        text-align: left;
+    }
 }
