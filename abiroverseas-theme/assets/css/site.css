@@ -794,9 +794,9 @@ body { margin: 0; }
     align-self: stretch;
 }
 
-/* Material pages: the thumbnail rail floats inside the image on desktop so
-   the image itself is the same height as the copy beside it. */
-@media (min-width: 1025px) {
+/* Material pages: the thumbnail rail floats inside the image from tablet
+   landscape up, so the image itself is the same height as the copy beside it. */
+@media (min-width: 1024px) {
     .ab-prod-hero .ab-product-gallery {
         position: relative;
         display: block;
@@ -826,8 +826,9 @@ body { margin: 0; }
     }
 }
 
-/* 4. Tablet portrait and below: content on top, image / slider below. */
-@media (max-width: 1024px) {
+/* 4. Tablet portrait and below (<= 1023px): content on top, media below.
+   Tablet landscape (>= 1024px) keeps the two-column banner. */
+@media (max-width: 1023px) {
     :root {
         --ab-banner-pad: 64px;
         --ab-banner-gap: 28px;
@@ -1066,8 +1067,9 @@ body { margin: 0; }
    ========================================================================= */
 
 /* Only the two-column banner needs a shared row height. Stacked banners keep
-   natural rows so the copy does not get padded out on tablets and phones. */
-@media (min-width: 1025px) {
+   natural rows so the copy does not get padded out on portrait tablets and
+   phones. */
+@media (min-width: 1024px) {
     .ab-hero-grid,
     .ab-about-hero-grid,
     .ab-contact-hero-grid,
@@ -1128,7 +1130,7 @@ body { margin: 0; }
     aspect-ratio: auto;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
     .ab-contact-hero .ab-contact-hero-art,
     .ab-products-hero .ab-products-hero-art,
     .ab-about-hero .ab-about-hero-art,
@@ -1152,11 +1154,13 @@ body { margin: 0; }
 
 
 /* =========================================================================
-   TABLET LAYOUT SYSTEM (<= 1024px, the same breakpoint as the banners)
+   TABLET LAYOUT SYSTEM (<= 1024px)
    -------------------------------------------------------------------------
    One rule set for the two things that repeat across the site:
      a) every multi-card grid becomes 2 x 2,
      b) every split section becomes "content on top, image / form below".
+   Banners are the exception: they stay two-column from 1024px up (tablet
+   landscape) and only stack from 1023px down.
    ========================================================================= */
 
 @media (min-width: 601px) and (max-width: 1024px) {
@@ -1356,7 +1360,7 @@ body { margin: 0; }
     background: #f58220;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
     .ab-eyebrow,
     .kh-eyebrow,
     .ab-contact-page .ab-eyebrow,
@@ -1418,7 +1422,7 @@ body { margin: 0; }
    (Home, About, Contact, Material, Product Families/Range, Knowledge).
    ========================================================================= */
 
-@media (min-width: 1025px) {
+@media (min-width: 1024px) {
     .ab-hero-grid,
     .ab-about-hero-grid,
     .ab-contact-hero-grid,
@@ -1478,7 +1482,7 @@ body { margin: 0; }
    and the material product gallery).
    ========================================================================= */
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
     .ab-home-slide .ab-hero-art,
     .ab-home-slide--final .ab-hero-art--rotating,
     .ab-about-hero .ab-about-hero-art,
@@ -1667,5 +1671,118 @@ body { margin: 0; }
     .ab-contact-page .ab-contact-aside,
     .ab-contact-page .ab-contact-form {
         text-align: left;
+    }
+}
+
+
+/* =========================================================================
+   TABLET LANDSCAPE BANNERS (1024px – 1366px)
+   -------------------------------------------------------------------------
+   A tablet held in landscape (iPad 1024x768, 11" 1194x834, 12.9" 1366x1024)
+   keeps the two-column banner of the desktop, and everything that used to
+   drift page by page is pinned here:
+
+     - one banner top / bottom spacing for every page,
+     - the copy column and the image column are the same size (equal width
+       AND the image stretches to the copy's exact height),
+     - the eyebrow keeps the desktop size, weight and tracking, and its orange
+       dash stays on the first line,
+     - images and sliders stay full height instead of the portrait 500px box.
+   ========================================================================= */
+
+@media (min-width: 1024px) and (max-width: 1366px) {
+    :root {
+        --ab-banner-pad: 90px;
+        --ab-banner-gap: 42px;
+    }
+
+    /* 1. One banner spacing, stated explicitly for every page banner. */
+    .ab-home-slide,
+    .ab-about-hero,
+    .ab-contact-hero,
+    .ab-prod-hero,
+    .ab-products-page .ab-products-hero,
+    .kh-hero,
+    .kh-article-hero {
+        padding-top: var(--ab-banner-pad);
+        padding-bottom: var(--ab-banner-pad);
+        margin: 0;
+    }
+
+    /* 2. Same size on both sides: equal columns, one shared row. */
+    .ab-hero-grid,
+    .ab-about-hero-grid,
+    .ab-contact-hero-grid,
+    .ab-prod-hero-grid,
+    .ab-products-hero-grid,
+    .kh-hero-grid,
+    .kh-article-hero-layout {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-rows: auto;
+        column-gap: var(--ab-banner-gap);
+        row-gap: var(--ab-banner-gap);
+        align-items: stretch;
+        align-content: start;
+    }
+
+    /* Copy defines the height and starts on its eyebrow. */
+    .ab-hero-copy,
+    .ab-about-hero-copy,
+    .ab-contact-hero-copy,
+    .ab-prod-copy,
+    .ab-products-hero-copy,
+    .kh-hero-grid > div:first-child,
+    .kh-article-hero-copy {
+        justify-content: flex-start;
+        align-self: stretch;
+        max-width: 100%;
+    }
+
+    /* The right container is exactly the left container's height. */
+    .ab-home-slide .ab-hero-art,
+    .ab-about-hero .ab-about-hero-art,
+    .ab-contact-hero .ab-contact-hero-art,
+    .ab-products-hero .ab-products-hero-art,
+    .kh-hero .kh-hero-note,
+    .kh-article-hero .kh-article-featured,
+    .ab-prod-hero .ab-product-gallery {
+        height: auto;
+        min-height: 0;
+        max-height: none;
+        align-self: stretch;
+        aspect-ratio: auto;
+        width: 100%;
+    }
+
+    .kh-article-hero .kh-article-featured .kh-featured-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* 3. One eyebrow look, identical to the desktop banner. */
+    .ab-eyebrow,
+    .kh-eyebrow,
+    .ab-contact-page .ab-eyebrow,
+    .ab-products-page .ab-eyebrow {
+        align-items: flex-start;
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: .13em;
+        line-height: 1.5;
+        color: #008080;
+    }
+
+    .ab-eyebrow::before,
+    .kh-eyebrow::before,
+    .ab-eyebrow:before,
+    .kh-eyebrow:before,
+    .ab-contact-page .ab-eyebrow::before,
+    .ab-products-page .ab-eyebrow::before {
+        flex: 0 0 24px;
+        width: 24px;
+        height: 2px;
+        margin-top: calc(.7em - 1px);
+        background: #f58220;
     }
 }
