@@ -1,29 +1,9 @@
+/* Shared design tokens live in site.css; these are About-specific depth tokens. */
 :root {
-    --ab-teal: #008080;
-    --ab-blue: #1D4E9F;
-    --ab-orange: #F58220;
-    --ab-charcoal: #4D4D4E;
-    --ab-ink: #142334;
-    --ab-muted: #536572;
-    --ab-paper: #f6f8f7;
-    --ab-white: #fff;
-    --ab-line: #dce5e5;
-    --ab-mist: #eaf3f2;
-    --ab-blue-mist: #edf2fa;
-    --ab-shadow: 0 18px 48px rgba(22, 44, 62, .10);
-    --ab-shadow-sm: 0 8px 24px rgba(22, 44, 62, .08);
-    /* 3D shadow tokens */
     --ab-3d: 0 2px 4px rgba(22, 44, 62, .04), 0 8px 20px rgba(22, 44, 62, .07), 0 20px 48px rgba(22, 44, 62, .06);
     --ab-3d-hover: 0 4px 8px rgba(22, 44, 62, .06), 0 14px 32px rgba(22, 44, 62, .10), 0 28px 56px rgba(22, 44, 62, .08);
     --ab-3d-deep: 0 4px 6px rgba(22, 44, 62, .05), 0 12px 28px rgba(22, 44, 62, .08), 0 24px 56px rgba(22, 44, 62, .07);
     --ab-3d-subtle: 0 1px 3px rgba(22, 44, 62, .04), 0 6px 16px rgba(22, 44, 62, .06);
-    --ab-radius: 20px;
-
-    --ab-max: 1240px;
-    font-family: "Reddit Sans", Arial, Helvetica, sans-serif;
-    color: var(--ab-ink);
-    font-synthesis: none;
-    scroll-behavior: smooth
 }
 
 *,
