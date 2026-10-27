@@ -1048,11 +1048,12 @@ body { margin: 0; }
     }
 }
 
-/* Page behind an open mobile menu must not scroll underneath it. */
-body.ab-nav-open {
-    overflow: hidden;
-    overscroll-behavior: contain;
-}
+/* NOTE: never lock the page with `overflow: hidden` on <body> here.
+   Every page stylesheet sets `overflow-x: clip` on html/body, so a body
+   `overflow: hidden` no longer propagates to the viewport - it turns <body>
+   into the scroll container of the sticky header instead, and the header and
+   its hamburger button then scroll out of view. The dropdown panel keeps
+   touch scrolling contained with `overscroll-behavior: contain` instead. */
 
 
 /* =========================================================================
@@ -1310,4 +1311,97 @@ body.ab-nav-open {
 /* WhatsApp keeps its own green accent in the footer contact list. */
 .ab-footer-contact .ab-footer-whatsapp-line .ab-icon {
     color: #25d366;
+}
+
+
+/* =========================================================================
+   EYEBROW SYSTEM
+   -------------------------------------------------------------------------
+   One eyebrow look on every page and at every size (font, weight, tracking,
+   colour and the orange dash), and the dash is aligned to the START of the
+   label so a two-line eyebrow still reads cleanly: the line stays with the
+   first line instead of floating between the two.
+   ========================================================================= */
+
+.ab-eyebrow,
+.kh-eyebrow,
+.ab-contact-page .ab-eyebrow,
+.ab-products-page .ab-eyebrow {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 0;
+    color: #008080;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: .13em;
+    line-height: 1.5;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.ab-eyebrow::before,
+.kh-eyebrow::before,
+.ab-eyebrow:before,
+.kh-eyebrow:before,
+.ab-contact-page .ab-eyebrow::before,
+.ab-products-page .ab-eyebrow::before {
+    content: "";
+    flex: 0 0 24px;
+    width: 24px;
+    height: 2px;
+    /* Optically centred on the first line, not on the whole wrapped label. */
+    margin-top: calc(.7em - 1px);
+    border-radius: 4px;
+    background: #f58220;
+}
+
+@media (max-width: 1024px) {
+    .ab-eyebrow,
+    .kh-eyebrow,
+    .ab-contact-page .ab-eyebrow,
+    .ab-products-page .ab-eyebrow {
+        font-size: 15px;
+        letter-spacing: .13em;
+    }
+}
+
+@media (max-width: 600px) {
+    .ab-eyebrow,
+    .kh-eyebrow,
+    .ab-contact-page .ab-eyebrow,
+    .ab-products-page .ab-eyebrow {
+        font-size: 14px;
+        letter-spacing: .13em;
+        line-height: 1.5;
+    }
+
+    .ab-eyebrow::before,
+    .kh-eyebrow::before,
+    .ab-eyebrow:before,
+    .kh-eyebrow:before,
+    .ab-contact-page .ab-eyebrow::before,
+    .ab-products-page .ab-eyebrow::before {
+        flex-basis: 18px;
+        width: 18px;
+    }
+}
+
+
+/* =========================================================================
+   FINAL BANNER SPACING GUARANTEE
+   -------------------------------------------------------------------------
+   Last word in the cascade: every page banner uses the same top and bottom
+   spacing at every breakpoint (this block loads after all page stylesheets).
+   ========================================================================= */
+
+.ab-home-slide,
+.ab-about-hero,
+.ab-contact-hero,
+.ab-prod-hero,
+.ab-products-page .ab-products-hero,
+.kh-hero,
+.kh-article-hero {
+    padding-top: var(--ab-banner-pad);
+    padding-bottom: var(--ab-banner-pad);
 }

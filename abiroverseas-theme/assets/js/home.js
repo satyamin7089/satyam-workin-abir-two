@@ -1,29 +1,9 @@
+/* Navigation is owned by the shared controller in assets/js/navigation.js.
+   Page scripts must not bind their own menu toggle: two controllers fight over
+   the .is-open state and the menu can close itself on the first tap. */
 (() => {
-            const nav = document.querySelector('.ab-nav-links'); const toggle = document.querySelector('.ab-nav-toggle'); const reduceMotion =
+            const reduceMotion =
                 window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (toggle && nav) {
-                toggle.addEventListener('click', () => {
-                    const open = toggle.getAttribute('aria-expanded') !== 'true';
-                    toggle.setAttribute('aria-expanded', String(open)); toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
-                    nav.classList.toggle('is-open', open)
-                }); nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-                    if (window.innerWidth <= 850) {
-                        nav.classList.remove('is-open'); toggle.setAttribute('aria-expanded',
-                            'false'); toggle.setAttribute('aria-label', 'Open navigation menu')
-                    }
-                }));
-                document.addEventListener('click', e => {
-                    if (window.innerWidth <= 850 &&
-                        nav.classList.contains('is-open') && !nav.contains(e.target) && !
-                        toggle.contains(e.target)) {
-                            nav.classList.remove('is-open');
-                        toggle.setAttribute('aria-expanded', 'false')
-                    }
-                });
-                window.addEventListener('resize', () => {
-                    if (window.innerWidth > 850) {nav.classList.remove('is-open'); toggle.setAttribute('aria-expanded', 'false')}
-                })
-            }
             const revealEls = document.querySelectorAll('.ab-reveal:not(.is-visible)'); if ('IntersectionObserver' in window && !reduceMotion) {
                 const
                 observer = new IntersectionObserver(entries => entries.forEach(entry => {
