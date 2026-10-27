@@ -1267,6 +1267,22 @@ body { margin: 0; }
     .ab-overview-visual {
         min-height: 320px;
     }
+
+    /* Every split section that carries a form: content on top, form below.
+       The form has no `order` of its own, so without this it keeps the
+       default order 0 and jumps above the copy. */
+    .ab-enquiry-layout > form,
+    .ab-enquiry-layout > .ab-form-card,
+    .ab-primary-layout > form,
+    .ab-primary-layout > .ab-product-form,
+    .ab-contact-layout > form,
+    .ab-contact-layout > .ab-contact-form,
+    .ab-support-layout > form,
+    .ab-industry-layout > form {
+        order: 2;
+        width: 100%;
+        max-width: 100%;
+    }
 }
 
 
@@ -1477,9 +1493,9 @@ body { margin: 0; }
 /* =========================================================================
    TABLET PORTRAIT / MOBILE BANNER MEDIA
    -------------------------------------------------------------------------
-   A 500px tall image on phones and tablets keeps the banner media from looking
-   like a wide landscape strip, for images and for both sliders (home gallery
-   and the material product gallery).
+   A tall image keeps the banner media from looking like a wide landscape
+   strip: 500px on portrait tablets, 350px on phones, for images and for both
+   sliders (home gallery and the material product gallery).
    ========================================================================= */
 
 @media (max-width: 1023px) {
@@ -1509,6 +1525,7 @@ body { margin: 0; }
     }
 }
 
+/* Phones: 350px so the media never dominates the first screen. */
 @media (max-width: 600px) {
     .ab-home-slide .ab-hero-art,
     .ab-home-slide--final .ab-hero-art--rotating,
@@ -1517,8 +1534,17 @@ body { margin: 0; }
     .ab-products-hero .ab-products-hero-art,
     .kh-article-hero .kh-article-featured,
     .ab-prod-hero .ab-product-gallery .ab-prod-art {
-        height: 500px;
-        min-height: 500px;
+        height: 350px;
+        min-height: 350px;
+        max-height: none;
+    }
+
+    /* Section visuals follow the same 350px rule on phones. */
+    .ab-story-visual,
+    .ab-credibility-visual,
+    .ab-overview-visual {
+        height: 350px;
+        min-height: 350px;
     }
 }
 
