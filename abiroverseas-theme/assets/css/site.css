@@ -725,25 +725,6 @@ body {
         radial-gradient(ellipse at 82% 42%, rgba(0, 128, 128, .09), transparent 35%),
         linear-gradient(112deg, #f7faf9 0%, #f3f7f6 53%, #eaf1f2 100%);
 }
-.ab-home-hero::before,
-.ab-about-hero::before,
-.ab-prod-hero::before,
-.ab-contact-hero::before,
-.ab-products-page .ab-products-hero::before {
-    right: -180px;
-    left: auto;
-    top: -265px;
-    bottom: auto;
-    width: 570px;
-    height: 570px;
-    border: 0;
-    border-radius: 50%;
-    box-shadow:
-        0 0 0 1px rgba(0, 128, 128, .1),
-        0 0 0 42px rgba(0, 128, 128, .025),
-        0 0 0 88px rgba(0, 128, 128, .02);
-    pointer-events: none;
-}
 .ab-hero-grid,
 .ab-about-hero-grid,
 .ab-prod-hero-grid,
