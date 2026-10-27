@@ -2313,3 +2313,27 @@ text-transform: uppercase;
     box-shadow: 0 0 0 8px #f1f6f4, 0 4px 14px rgba(20,55,63,.10), 0 8px 22px rgba(20,55,63,.06);
 }
 .ab-way-foot { color: #657984; }
+
+/* =========================================================================
+   BHAVIK ENTERPRISES — "Industries we serve"
+   -------------------------------------------------------------------------
+   The copy on the left holds its place while the industry list on the right
+   scrolls past it. Scoped to this page: `.ab-bhavik-page` is on the template's
+   <main>, so the About page's promise grid is untouched. Collapses to a plain
+   stacked block at the same 850px breakpoint the grid itself uses.
+   ========================================================================= */
+.ab-bhavik-page .ab-promise-grid {
+    align-items: start
+}
+
+.ab-bhavik-page .ab-promise-copy {
+    position: sticky;
+    top: calc(var(--ab-nav-h) + 24px);
+    align-self: start
+}
+
+@media (max-width: 850px) {
+    .ab-bhavik-page .ab-promise-copy {
+        position: static
+    }
+}

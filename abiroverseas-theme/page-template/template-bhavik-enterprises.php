@@ -88,7 +88,7 @@ $bv_faqs = array(
     ),
 );
 ?>
-<main id="main-content" class="ab-contact-page">
+<main id="main-content" class="ab-contact-page ab-bhavik-page">
 
     <!-- 1. Banner -->
     <section class="ab-about-hero" aria-labelledby="bv-title">
