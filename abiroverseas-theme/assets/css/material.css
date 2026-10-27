@@ -874,7 +874,9 @@ p {
     background: linear-gradient(112deg, #123247, #155b6b 75%, #157d79);
     color: #fff;
     position: relative;
-    overflow: hidden
+    /* `clip`, not `hidden`: this band holds a sticky copy column, and an
+       ancestor with a scrolling box would stop it from sticking. */
+    overflow: clip
 }
 
 .ab-primary-enquiry:after {
@@ -895,7 +897,17 @@ p {
     display: grid;
     grid-template-columns: .82fr 1.18fr;
     gap: 50px;
-    align-items: center
+    /* Top-aligned so the copy can stay put while the form scrolls. */
+    align-items: start
+}
+
+/* The enquiry copy stays in view for the whole form. The offset clears the
+   sticky main navigation plus the sticky material section bar, which is the
+   same expression the in-page anchors use for their scroll margin. */
+.ab-primary-copy {
+    position: sticky;
+    top: calc(var(--ab-live-nav-h, var(--ab-nav-h)) + var(--ab-live-subnav-h, 60px) + 22px);
+    align-self: start
 }
 
 .ab-primary-copy .ab-eyebrow {
@@ -1274,9 +1286,20 @@ p {
 
 .ab-support-layout {
     display: grid;
-    grid-template-columns: .8fr 1.2fr;
-    gap: 42px;
-    align-items: center
+    /* One column at every breakpoint: the heading, paragraph and link form one
+       block on top and the support cards follow underneath. */
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+    align-items: start
+}
+
+.ab-support-copy {
+    order: 1;
+    max-width: 780px
+}
+
+.ab-support-layout > div:last-child {
+    order: 2
 }
 
 .ab-support-copy h2 {
@@ -1734,9 +1757,14 @@ p {
         grid-template-columns: minmax(0, 1fr)
     }
 
-    .ab-selection-layout,
-    .ab-support-layout {
+    .ab-selection-layout {
         grid-template-columns: .8fr 1.2fr
+    }
+
+    /* Technical & commercial support stays stacked on tablet (see the
+       .ab-support-layout comment above). */
+    .ab-support-layout {
+        grid-template-columns: minmax(0, 1fr)
     }
 
     .ab-secondary-card {
@@ -1959,6 +1987,11 @@ p {
     .ab-primary-layout {
         grid-template-columns: 1fr;
         gap: 22px
+    }
+
+    /* Single column on phones: nothing to scroll past, so no sticky copy. */
+    .ab-primary-copy {
+        position: static
     }
 
     .ab-primary-copy h2 {
