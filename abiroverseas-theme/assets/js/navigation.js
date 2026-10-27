@@ -5,6 +5,25 @@
   toggle.dataset.navReady = 'true';
 
   const mobileQuery = window.matchMedia('(max-width: 850px)');
+
+  // Lock the page behind the open panel so touch scrolling cannot drag the
+  // content underneath the dropdown.
+  const setBodyLock = (locked) => {
+    document.body.classList.toggle('ab-nav-open', locked);
+  };
+
+  // Size the dropdown against the header's real position instead of a fixed
+  // viewport offset, so the last menu item is always reachable on touch.
+  const fitPanel = () => {
+    if (!mobileQuery.matches) {
+      nav.style.removeProperty('--ab-nav-panel-max');
+      return;
+    }
+    const rect = nav.getBoundingClientRect();
+    const available = window.innerHeight - Math.max(rect.top, 0) - 12;
+    nav.style.setProperty('--ab-nav-panel-max', Math.max(180, Math.round(available)) + 'px');
+  };
+
   const closeSubmenus = (except = null) => {
     nav.querySelectorAll('li.is-submenu-open').forEach((item) => {
       if (item === except) return;
@@ -15,9 +34,11 @@
   };
   const closeMenu = () => {
     nav.style.removeProperty('display');
+    nav.style.removeProperty('--ab-nav-panel-max');
     nav.classList.remove('is-open');
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-label', 'Open navigation menu');
+    setBodyLock(false);
     closeSubmenus();
   };
 
@@ -57,12 +78,20 @@
     const open = toggle.getAttribute('aria-expanded') !== 'true';
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
-    nav.classList.toggle('is-open', open);
-    if (mobileQuery.matches) {
-      if (open) nav.style.setProperty('display', 'flex', 'important');
-      else nav.style.removeProperty('display');
+
+    if (!open) {
+      closeMenu();
+      return;
     }
-    if (!open) closeSubmenus();
+
+    nav.classList.add('is-open');
+    if (mobileQuery.matches) {
+      nav.style.setProperty('display', 'flex', 'important');
+    }
+    // The page behind the panel is frozen and the panel is measured against
+    // its real position, so every item stays reachable on small screens.
+    setBodyLock(true);
+    fitPanel();
   }, true);
 
   nav.querySelectorAll('a').forEach((link) => {
@@ -88,6 +117,16 @@
   };
   if (mobileQuery.addEventListener) mobileQuery.addEventListener('change', onBreakpointChange);
   else mobileQuery.addListener(onBreakpointChange);
+
+  // Keep the open panel inside the viewport after a rotation or toolbar resize.
+  const refitPanel = () => {
+    if (nav.classList.contains('is-open')) fitPanel();
+  };
+  window.addEventListener('resize', refitPanel, { passive: true });
+  window.addEventListener('orientationchange', refitPanel, { passive: true });
+  window.addEventListener('pageshow', () => {
+    if (document.visibilityState !== 'hidden' && !nav.classList.contains('is-open')) setBodyLock(false);
+  });
 })();
 
 /* Back-to-top control: shared footer markup is present on every front-end page. */
