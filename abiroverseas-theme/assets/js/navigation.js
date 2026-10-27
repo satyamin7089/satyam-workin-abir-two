@@ -6,12 +6,6 @@
 
   const mobileQuery = window.matchMedia('(max-width: 850px)');
 
-  // Lock the page behind the open panel so touch scrolling cannot drag the
-  // content underneath the dropdown.
-  const setBodyLock = (locked) => {
-    document.body.classList.toggle('ab-nav-open', locked);
-  };
-
   // Size the dropdown against the header's real position instead of a fixed
   // viewport offset, so the last menu item is always reachable on touch.
   const fitPanel = () => {
@@ -38,7 +32,6 @@
     nav.classList.remove('is-open');
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-label', 'Open navigation menu');
-    setBodyLock(false);
     closeSubmenus();
   };
 
@@ -88,9 +81,11 @@
     if (mobileQuery.matches) {
       nav.style.setProperty('display', 'flex', 'important');
     }
-    // The page behind the panel is frozen and the panel is measured against
-    // its real position, so every item stays reachable on small screens.
-    setBodyLock(true);
+    // The panel is measured against the header's real position, so every item
+    // stays reachable on small screens. The page itself is intentionally left
+    // scrollable: locking it with `overflow: hidden` turns the <body> into the
+    // scroll container for the sticky header, which makes the header (and this
+    // button) disappear once the page is scrolled.
     fitPanel();
   }, true);
 
@@ -125,7 +120,7 @@
   window.addEventListener('resize', refitPanel, { passive: true });
   window.addEventListener('orientationchange', refitPanel, { passive: true });
   window.addEventListener('pageshow', () => {
-    if (document.visibilityState !== 'hidden' && !nav.classList.contains('is-open')) setBodyLock(false);
+    if (!nav.classList.contains('is-open')) closeMenu();
   });
 })();
 

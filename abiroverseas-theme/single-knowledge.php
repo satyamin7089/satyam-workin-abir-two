@@ -75,6 +75,28 @@ if ( $when || $has_section_note['when'] ) { $toc_items[] = array( 'when-to-consi
 if ( $faqs || $has_section_note['faqs'] ) { $toc_items[] = array( 'article-faqs', $headings['faqs'] ?: 'FAQs' ); }
 if ( $related || $has_section_note['related'] ) { $toc_items[] = array( 'related-links', $headings['related'] ?: 'Related materials' ); }
 if ( $cta_kicker || $cta_title || $cta_text || ( $cta_url && $cta_label ) || $has_section_note['cta'] ) { $toc_items[] = array( 'material-enquiry', $cta_title ?: 'Contact our team' ); }
+
+/*
+ * Banner excerpt: a manual excerpt wins, then the SEO meta description used by
+ * the common plugins, then the direct answer or the article copy, so the
+ * knowledge article banner always carries a short excerpt under the title.
+ */
+$ab_article_deck = '';
+if ( has_excerpt() ) {
+    $ab_article_deck = get_the_excerpt();
+} else {
+    foreach ( array( '_yoast_wpseo_metadesc', 'rank_math_description', '_aioseo_description', 'abk_meta_description' ) as $ab_meta_key ) {
+        $ab_meta_value = get_post_meta( $id, $ab_meta_key, true );
+        if ( is_string( $ab_meta_value ) && '' !== trim( $ab_meta_value ) ) {
+            $ab_article_deck = $ab_meta_value;
+            break;
+        }
+    }
+    if ( '' === trim( $ab_article_deck ) ) {
+        $ab_article_deck = '' !== trim( (string) $direct ) ? $direct : $article_content;
+    }
+    $ab_article_deck = wp_trim_words( wp_strip_all_tags( (string) $ab_article_deck ), 34, '…' );
+}
 ?>
 <main id="kh-main" class="kh-main kh-article-main">
 
@@ -82,7 +104,7 @@ if ( $cta_kicker || $cta_title || $cta_text || ( $cta_url && $cta_label ) || $ha
     <div class="kh-article-hero-copy">
 
       <h1><?php the_title(); ?></h1>
-      <?php if ( has_excerpt() ) : ?><p class="kh-deck"><?php echo esc_html( get_the_excerpt() ); ?></p><?php endif; ?>
+      <?php if ( '' !== trim( (string) $ab_article_deck ) ) : ?><p class="kh-deck"><?php echo esc_html( $ab_article_deck ); ?></p><?php endif; ?>
      
     </div>
     <?php if ( has_post_thumbnail() ) : ?><figure class="kh-article-featured"><?php the_post_thumbnail( 'large', array( 'class' => 'kh-featured-image', 'loading' => 'eager', 'fetchpriority' => 'high', 'decoding' => 'async' ) ); ?><?php $feature_caption = wp_get_attachment_caption( get_post_thumbnail_id() ); if ( $feature_caption ) : ?><figcaption><?php echo esc_html( $feature_caption ); ?></figcaption><?php endif; ?></figure><?php endif; ?>

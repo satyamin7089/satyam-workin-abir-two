@@ -1048,8 +1048,360 @@ body { margin: 0; }
     }
 }
 
-/* Page behind an open mobile menu must not scroll underneath it. */
-body.ab-nav-open {
-    overflow: hidden;
-    overscroll-behavior: contain;
+/* NOTE: never lock the page with `overflow: hidden` on <body> here.
+   Every page stylesheet sets `overflow-x: clip` on html/body, so a body
+   `overflow: hidden` no longer propagates to the viewport - it turns <body>
+   into the scroll container of the sticky header instead, and the header and
+   its hamburger button then scroll out of view. The dropdown panel keeps
+   touch scrolling contained with `overscroll-behavior: contain` instead. */
+
+
+/* =========================================================================
+   EXACT BANNER ROW PARITY
+   -------------------------------------------------------------------------
+   Every banner puts its copy and its image / gallery / note in one grid row
+   with an explicit minimum row height. Both columns stretch to that row, so
+   the left content block and the right image are always exactly the same
+   height, on every page (Contact, Knowledge, Product Range included).
+   ========================================================================= */
+
+/* Only the two-column banner needs a shared row height. Stacked banners keep
+   natural rows so the copy does not get padded out on tablets and phones. */
+@media (min-width: 1025px) {
+    .ab-hero-grid,
+    .ab-about-hero-grid,
+    .ab-contact-hero-grid,
+    .ab-prod-hero-grid,
+    .ab-products-hero-grid,
+    .kh-hero-grid,
+    .kh-article-hero-layout {
+        grid-template-rows: minmax(var(--ab-banner-media-min), auto);
+    }
+}
+
+.ab-hero-grid,
+.ab-about-hero-grid,
+.ab-contact-hero-grid,
+.ab-prod-hero-grid,
+.ab-products-hero-grid,
+.kh-hero-grid,
+.kh-article-hero-layout {
+    align-items: stretch;
+    align-content: center;
+}
+
+/* Copy column fills the row and centres its text inside it. */
+.ab-hero-copy,
+.ab-about-hero-copy,
+.ab-contact-hero-copy,
+.ab-prod-copy,
+.ab-products-hero-copy,
+.kh-hero-grid > div:first-child,
+.kh-article-hero-copy {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    justify-content: center;
+}
+
+/* Image / gallery / note column is exactly the row height. */
+.ab-contact-hero .ab-contact-hero-art,
+.ab-products-hero .ab-products-hero-art,
+.ab-about-hero .ab-about-hero-art,
+.ab-home-slide .ab-hero-art,
+.kh-hero .kh-hero-note,
+.kh-article-hero .kh-article-featured {
+    height: 100%;
+    min-height: 0;
+    align-self: stretch;
+}
+
+/* The note card on the Knowledge hero reads as a panel of the same height. */
+.kh-hero-note {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* The article banner keeps its featured image at the copy's height too. */
+.kh-article-featured {
+    aspect-ratio: auto;
+}
+
+@media (max-width: 1024px) {
+    .ab-contact-hero .ab-contact-hero-art,
+    .ab-products-hero .ab-products-hero-art,
+    .ab-about-hero .ab-about-hero-art,
+    .ab-home-slide .ab-hero-art,
+    .kh-hero .kh-hero-note,
+    .kh-article-hero .kh-article-featured {
+        height: auto;
+        min-height: var(--ab-banner-media-min);
+    }
+
+    .kh-article-featured {
+        aspect-ratio: 4 / 3;
+        min-height: 0;
+    }
+
+    .kh-hero-grid,
+    .kh-article-hero-layout {
+        grid-template-rows: auto;
+    }
+}
+
+
+/* =========================================================================
+   TABLET LAYOUT SYSTEM (<= 1024px, the same breakpoint as the banners)
+   -------------------------------------------------------------------------
+   One rule set for the two things that repeat across the site:
+     a) every multi-card grid becomes 2 x 2,
+     b) every split section becomes "content on top, image / form below".
+   ========================================================================= */
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    /* a) Card grids -> two per row. */
+    .ab-family-grid,
+    .ab-market-grid,
+    .ab-process-flow,
+    .ab-enquiry-steps,
+    .ab-resource-grid,
+    .ab-cert-grid,
+    .ab-testimonial-grid,
+    .ab-grade-list,
+    .ab-enquiry-options,
+    .ab-pillars,
+    .ab-way-grid,
+    .ab-principles,
+    .ab-why-grid,
+    .ab-promise-cards,
+    .ab-reach-stats,
+    .ab-character-grid,
+    .ab-grade-cards,
+    .ab-forms-grid,
+    .ab-app-grid,
+    .ab-industry-cards,
+    .ab-checklist,
+    .ab-support-cardgrid,
+    .ab-related-grid,
+    .ab-comparison-tips,
+    .ab-range-grid,
+    .kh-card-grid,
+    .kh-consider-grid,
+    .kh-related-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* The process connector only works on the single desktop row. */
+    .ab-process-flow {
+        gap: 28px 22px;
+        margin-top: 36px;
+    }
+
+    .ab-process-flow::before {
+        display: none;
+    }
+}
+
+@media (max-width: 1024px) {
+    /* b) Split sections -> content first, media / form second. */
+    .ab-credibility-grid,
+    .ab-story,
+    .ab-grade-board,
+    .ab-enquiry-layout,
+    .ab-reach-grid,
+    .ab-promise-grid,
+    .ab-overview-layout,
+    .ab-grade-method-grid,
+    .ab-primary-layout,
+    .ab-industry-layout,
+    .ab-selection-layout,
+    .ab-support-layout,
+    .ab-contact-layout,
+    .ab-faq-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 30px;
+        align-items: start;
+    }
+
+    /* Copy / list first, visual / form last - regardless of DOM order. */
+    .ab-credibility-copy,
+    .ab-story-copy,
+    .ab-reach-copy,
+    .ab-promise-copy,
+    .ab-grade-panel,
+    .ab-enquiry-copy,
+    .ab-overview-copy,
+    .ab-primary-copy,
+    .ab-industry-copy,
+    .ab-selection-copy,
+    .ab-support-copy,
+    .ab-contact-aside,
+    .ab-faq-side {
+        order: 1;
+    }
+
+    .ab-credibility-visual,
+    .ab-story-visual,
+    .ab-promise-list,
+    .ab-grade-list,
+    .ab-enquiry-options,
+    .ab-overview-visual,
+    .ab-grade-cards,
+    .ab-product-form,
+    .ab-industry-cards,
+    .ab-checklist,
+    .ab-support-cardgrid,
+    .ab-contact-form,
+    .ab-faq-list {
+        order: 2;
+    }
+
+    /* Stacked media keeps a usable height without forcing equal rows. */
+    .ab-story-visual,
+    .ab-credibility-visual,
+    .ab-overview-visual {
+        min-height: 320px;
+    }
+}
+
+
+/* =========================================================================
+   CONTACT CHANNELS
+   -------------------------------------------------------------------------
+   Email, phone and WhatsApp share the orange accent used by the buttons.
+   ========================================================================= */
+
+.ab-topbar .ab-contact-line .ab-icon,
+.ab-footer-contact .ab-icon,
+.ab-contact-hero-meta .ab-contact-meta-mark {
+    color: #f58220;
+}
+
+.ab-contact-hero-meta .ab-contact-meta-mark {
+    background: #fff1e6;
+    box-shadow: 0 4px 10px rgba(245, 130, 32, .12);
+}
+
+.ab-btn--whatsapp {
+    background: #25d366;
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(37, 211, 102, .26);
+}
+
+.ab-btn--whatsapp:hover {
+    background: #1eb257;
+    color: #fff;
+}
+
+.ab-btn--whatsapp .ab-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.ab-footer-contact .ab-footer-whatsapp {
+    color: #c0cdd0;
+    text-decoration: none;
+}
+
+.ab-contact-page .ab-btn--whatsapp {
+    text-decoration: none;
+}
+
+/* WhatsApp keeps its own green accent in the footer contact list. */
+.ab-footer-contact .ab-footer-whatsapp-line .ab-icon {
+    color: #25d366;
+}
+
+
+/* =========================================================================
+   EYEBROW SYSTEM
+   -------------------------------------------------------------------------
+   One eyebrow look on every page and at every size (font, weight, tracking,
+   colour and the orange dash), and the dash is aligned to the START of the
+   label so a two-line eyebrow still reads cleanly: the line stays with the
+   first line instead of floating between the two.
+   ========================================================================= */
+
+.ab-eyebrow,
+.kh-eyebrow,
+.ab-contact-page .ab-eyebrow,
+.ab-products-page .ab-eyebrow {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 0;
+    color: #008080;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: .13em;
+    line-height: 1.5;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.ab-eyebrow::before,
+.kh-eyebrow::before,
+.ab-eyebrow:before,
+.kh-eyebrow:before,
+.ab-contact-page .ab-eyebrow::before,
+.ab-products-page .ab-eyebrow::before {
+    content: "";
+    flex: 0 0 24px;
+    width: 24px;
+    height: 2px;
+    /* Optically centred on the first line, not on the whole wrapped label. */
+    margin-top: calc(.7em - 1px);
+    border-radius: 4px;
+    background: #f58220;
+}
+
+@media (max-width: 1024px) {
+    .ab-eyebrow,
+    .kh-eyebrow,
+    .ab-contact-page .ab-eyebrow,
+    .ab-products-page .ab-eyebrow {
+        font-size: 15px;
+        letter-spacing: .13em;
+    }
+}
+
+@media (max-width: 600px) {
+    .ab-eyebrow,
+    .kh-eyebrow,
+    .ab-contact-page .ab-eyebrow,
+    .ab-products-page .ab-eyebrow {
+        font-size: 14px;
+        letter-spacing: .13em;
+        line-height: 1.5;
+    }
+
+    .ab-eyebrow::before,
+    .kh-eyebrow::before,
+    .ab-eyebrow:before,
+    .kh-eyebrow:before,
+    .ab-contact-page .ab-eyebrow::before,
+    .ab-products-page .ab-eyebrow::before {
+        flex-basis: 18px;
+        width: 18px;
+    }
+}
+
+
+/* =========================================================================
+   FINAL BANNER SPACING GUARANTEE
+   -------------------------------------------------------------------------
+   Last word in the cascade: every page banner uses the same top and bottom
+   spacing at every breakpoint (this block loads after all page stylesheets).
+   ========================================================================= */
+
+.ab-home-slide,
+.ab-about-hero,
+.ab-contact-hero,
+.ab-prod-hero,
+.ab-products-page .ab-products-hero,
+.kh-hero,
+.kh-article-hero {
+    padding-top: var(--ab-banner-pad);
+    padding-bottom: var(--ab-banner-pad);
 }

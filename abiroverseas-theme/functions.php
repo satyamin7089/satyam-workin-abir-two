@@ -2,7 +2,7 @@
 /** Abiroverseas — WordPress theme functions. */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'AB_THEME_VERSION', '1.4.2' );
+define( 'AB_THEME_VERSION', '1.4.4' );
 
 add_action( 'after_setup_theme', 'ab_theme_setup' );
 function ab_theme_setup() {
