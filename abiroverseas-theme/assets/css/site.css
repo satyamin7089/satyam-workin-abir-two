@@ -751,6 +751,51 @@ body {
 .ab-products-hero-grid {
     align-items: stretch;
 }
+
+.ab-home-hero::before,
+.ab-about-hero::before,
+.ab-prod-hero::before,
+.ab-contact-hero::before,
+.ab-products-page .ab-products-hero::before,
+.kh-hero::before,
+.kh-article-hero::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -265px;
+    right: -180px;
+    left: auto;
+    bottom: auto;
+    width: 570px;
+    height: 570px;
+    border: 0;
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 1px rgba(0, 128, 128, .1),
+        0 0 0 42px rgba(0, 128, 128, .025),
+        0 0 0 88px rgba(0, 128, 128, .02);
+    pointer-events: none;
+}
+.ab-product-gallery { align-self: stretch; }
+.ab-prod-hero .ab-product-gallery .ab-prod-art { height: 100%; }
+.ab-section h2,
+.ab-contact-page h2,
+.kh-library-heading h2,
+.kh-section h2 {
+    font-size: clamp(32px, 3.7vw, 52px);
+    line-height: 1.12;
+    letter-spacing: -.035em;
+    text-wrap: balance;
+}
+.ab-section h3,
+.ab-contact-page h3,
+.kh-card h3,
+.ab-products-page .ab-family-card h3,
+.ab-products-page .ab-range-card h3 {
+    font-size: 22px;
+    line-height: 1.3;
+    text-wrap: balance;
+}
 .ab-hero-copy,
 .ab-about-hero-copy,
 .ab-contact-hero-copy,
@@ -999,7 +1044,9 @@ button, input, select, textarea { max-width: 100%; }
     .ab-about-hero::before,
     .ab-prod-hero::before,
     .ab-contact-hero::before,
-    .ab-products-page .ab-products-hero::before {
+    .ab-products-page .ab-products-hero::before,
+    .kh-hero::before,
+    .kh-article-hero::before {
         right: -310px;
         top: -320px;
         width: 440px;
