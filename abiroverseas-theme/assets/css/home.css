@@ -139,7 +139,6 @@ p {
 }
 
 .ab-section {
-    padding: 112px 0;
     position: relative;
     scroll-margin-top: 100px
 }
@@ -1722,10 +1721,6 @@ hard outlines. */
         min-height: 400px
     }
 
-    .ab-section {
-        padding: 90px 0
-    }
-
     .ab-market-grid {
         grid-template-columns: repeat(4, 1fr)
     }
@@ -1851,10 +1846,6 @@ hard outlines. */
     body {
         font-size: 16px;
         line-height: 1.6
-    }
-
-    .ab-section {
-        padding: 70px 0
     }
 
     .ab-section-head {

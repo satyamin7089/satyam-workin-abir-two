@@ -2,7 +2,7 @@
 /** Abiroverseas — WordPress theme functions. */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'AB_THEME_VERSION', '1.4.8' );
+define( 'AB_THEME_VERSION', '1.5.0' );
 
 add_action( 'after_setup_theme', 'ab_theme_setup' );
 function ab_theme_setup() {
@@ -52,10 +52,11 @@ add_action( 'wp_enqueue_scripts', 'ab_enqueue_assets' );
 function ab_enqueue_assets() {
     $base = get_template_directory_uri();
     $version = AB_THEME_VERSION;
-    $style = '';
+    // A page can legitimately need more than one of the theme's stylesheets.
+    $styles = array();
     $script = '';
-    if ( is_singular( 'knowledge' ) ) { $style = 'knowledge.css'; $script = 'knowledge-single.js'; }
-    elseif ( is_post_type_archive( 'knowledge' ) || is_tax( array( 'knowledge_hub', 'knowledge_material', 'knowledge_topic' ) ) ) { $style = 'knowledge.css'; $script = 'knowledge-hub.js'; }
+    if ( is_singular( 'knowledge' ) ) { $styles = array( 'knowledge.css' ); $script = 'knowledge-single.js'; }
+    elseif ( is_post_type_archive( 'knowledge' ) || is_tax( array( 'knowledge_hub', 'knowledge_material', 'knowledge_topic' ) ) ) { $styles = array( 'knowledge.css' ); $script = 'knowledge-hub.js'; }
     elseif ( is_page() ) {
         /*
          * Resolve the page layout by slug first, then by assigned template.
@@ -67,31 +68,43 @@ function ab_enqueue_assets() {
         $template = get_page_template_slug( $page_id );
 
         if ( is_front_page() || 'home' === $slug || 'page-templates/template-home.php' === $template ) {
-            $style = 'home.css';
+            $styles = array( 'home.css' );
             $script = 'home.js';
         } elseif ( 'about' === $slug || 'page-templates/template-about.php' === $template ) {
-            $style = 'about.css';
+            $styles = array( 'about.css' );
             $script = 'about.js';
         } elseif ( in_array( $slug, array( 'products', 'product-families', 'product-range' ), true ) || in_array( $template, array( 'page-template/template-product-families.php', 'page-template/template-product-range.php' ), true ) ) {
             // Both product directories share one responsive design system and live-search controller.
-            $style = 'products.css';
+            $styles = array( 'products.css' );
             $script = 'products.js';
         } elseif ( 'contact-us' === $slug || 'page-template/template-contact.php' === $template ) {
             // Keep Contact page styling isolated in its own stylesheet.
-            $style = 'contact.css';
+            $styles = array( 'contact.css' );
         } elseif ( 'bhavik-enterprises' === $slug || in_array( $template, array( 'page-template/template-bhavik-enterprises.php', 'page-templates/template-bhavik-enterprises.php' ), true ) ) {
-            // Bhavik Enterprises distributor page: own sections, shared banner system.
-            $style = 'bhavik.css';
-            $script = 'bhavik.js';
-        }elseif ( in_array( $slug, array( 'recycled-plastics','ps','abs','eva','pvc','pp','ldpe','hdpe', 'material', 'materials' ), true ) || 'page-templates/template-material.php' === $template || 'page-templates/template-material-Recycled-Plastics.php' === $template || 'page-templates/template-material-PS.php' === $template || 'page-templates/template-material-ABS.php' === $template || 'page-templates/template-material-EVA.php' === $template || 'page-templates/template-material-PVC.php' === $template || 'page-templates/template-material-PP.php' === $template || 'page-templates/template-material-LDPE.php' === $template  ) {
-            $style = 'material.css';
+            /*
+             * Bhavik Enterprises is built from the About page's components plus
+             * the Contact page's form section, so it loads exactly those two
+             * stylesheets — same order, same files, no page-specific CSS.
+             */
+            $styles = array( 'about.css', 'contact.css' );
+            // about.js is the theme's own reveal controller and is fully guarded.
+            $script = 'about.js';
+        } elseif ( in_array( $slug, array( 'recycled-plastics','ps','abs','eva','pvc','pp','ldpe','hdpe', 'material', 'materials' ), true ) || 'page-templates/template-material.php' === $template || 'page-templates/template-material-Recycled-Plastics.php' === $template || 'page-templates/template-material-PS.php' === $template || 'page-templates/template-material-ABS.php' === $template || 'page-templates/template-material-EVA.php' === $template || 'page-templates/template-material-PVC.php' === $template || 'page-templates/template-material-PP.php' === $template || 'page-templates/template-material-LDPE.php' === $template  ) {
+            $styles = array( 'material.css' );
             $script = 'material.js';
         }
     }
     // Load the declared brand font once so every template, including the shared header, uses the same real font instead of silently falling back.
     wp_enqueue_style( 'ab-reddit-sans', 'https://fonts.googleapis.com/css2?family=Reddit+Sans:wght@400;500;600;700;800&display=swap', array(), null );
-    if ( $style ) { wp_enqueue_style( 'ab-page-layout', $base . '/assets/css/' . $style, array( 'ab-reddit-sans' ), $version ); }
-    wp_enqueue_style( 'ab-site-footer', $base . '/assets/css/site.css', $style ? array( 'ab-page-layout' ) : array( 'ab-reddit-sans' ), $version );
+    $last_style = 'ab-reddit-sans';
+    foreach ( $styles as $index => $file ) {
+        // First sheet keeps the historical 'ab-page-layout' handle; any extra
+        // sheet chains behind it so it still loads before site.css.
+        $handle = 0 === $index ? 'ab-page-layout' : 'ab-page-layout-' . $index;
+        wp_enqueue_style( $handle, $base . '/assets/css/' . $file, array( $last_style ), $version );
+        $last_style = $handle;
+    }
+    wp_enqueue_style( 'ab-site-footer', $base . '/assets/css/site.css', array( $last_style ), $version );
     if ( $script ) { wp_enqueue_script( 'ab-page-interactions', $base . '/assets/js/' . $script, array(), $version, true ); }
     // One navigation controller serves the shared header on every page.
     wp_enqueue_script( 'ab-navigation', $base . '/assets/js/navigation.js', array(), $version, true );
