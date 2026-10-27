@@ -23,11 +23,11 @@ if ( isset( $_GET['ab_enquiry'] ) && is_scalar( $_GET['ab_enquiry'] ) ) {
                 <div class="ab-contact-hero-actions">
                     <a class="ab-btn" href="#quick-enquiry">SEND AN ENQUIRY <svg class="ab-icon" aria-hidden="true"><use href="#ab-icon-arrow" /></svg></a>
                     <a class="ab-btn ab-btn--light" href="mailto:info@abiroverseas.com">EMAIL OUR TEAM</a>
-                    <a class="ab-btn ab-btn--whatsapp" href="https://wa.me/18565233366?text=Hello%20Abiroverseas%2C%20I%27d%20like%20to%20discuss%20a%20material%20requirement." target="_blank" rel="noopener noreferrer">WHATSAPP US <svg class="ab-icon" aria-hidden="true"><use href="#ab-icon-whatsapp" /></svg></a>
                 </div>
                 <div class="ab-contact-hero-meta">
                     <a href="mailto:info@abiroverseas.com"><span class="ab-contact-meta-mark" aria-hidden="true">✉</span><span><strong>Email us</strong><small>info@abiroverseas.com</small></span></a>
                     <a href="tel:+18565233366"><span class="ab-contact-meta-mark ab-contact-meta-mark--orange" aria-hidden="true">↗</span><span><strong>Call our team</strong><small>+1 (856) 523 3366</small></span></a>
+                    <a class="ab-contact-meta-item ab-contact-meta-item--whatsapp" href="https://wa.me/18565233366" target="_blank" rel="noopener noreferrer"><span class="ab-contact-meta-mark ab-contact-meta-mark--whatsapp" aria-hidden="true"><svg class="ab-icon"><use href="#ab-icon-whatsapp" /></svg></span><span><strong>WhatsApp</strong><small>+1 (856) 523 3366</small></span></a>
                 </div>
             </div>
             <div class="ab-contact-hero-art" role="img" aria-label="Close-up of industrial polymer resin pellets and flowing material forms">
