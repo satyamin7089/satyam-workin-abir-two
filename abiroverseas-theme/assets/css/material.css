@@ -1,25 +1,4 @@
-:root {
-    --ab-teal: #008080;
-    --ab-blue: #1D4E9F;
-    --ab-orange: #F58220;
-    --ab-charcoal: #4D4D4E;
-    --ab-ink: #142334;
-    --ab-muted: #536572;
-    --ab-paper: #f6f8f7;
-    --ab-white: #fff;
-    --ab-line: #dce5e5;
-    --ab-mist: #eaf3f2;
-    --ab-blue-mist: #edf2fa;
-    --ab-shadow: 0 24px 58px rgba(22, 44, 62, .12);
-    --ab-shadow-sm: 0 11px 30px rgba(22, 44, 62, .085);
-    --ab-radius: 24px;
-
-    --ab-max: 1350px;
-    font-family: "Reddit Sans", Arial, Helvetica, sans-serif;
-    color: var(--ab-ink);
-    font-synthesis: none;
-    scroll-behavior: smooth
-}
+/* Shared design tokens and document defaults are maintained in assets/css/site.css. */
 
 *,
 *::before,
