@@ -2,7 +2,7 @@
 /** Abiroverseas — WordPress theme functions. */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'AB_THEME_VERSION', '1.4.7' );
+define( 'AB_THEME_VERSION', '1.4.8' );
 
 add_action( 'after_setup_theme', 'ab_theme_setup' );
 function ab_theme_setup() {
@@ -79,6 +79,10 @@ function ab_enqueue_assets() {
         } elseif ( 'contact-us' === $slug || 'page-template/template-contact.php' === $template ) {
             // Keep Contact page styling isolated in its own stylesheet.
             $style = 'contact.css';
+        } elseif ( 'bhavik-enterprises' === $slug || in_array( $template, array( 'page-template/template-bhavik-enterprises.php', 'page-templates/template-bhavik-enterprises.php' ), true ) ) {
+            // Bhavik Enterprises distributor page: own sections, shared banner system.
+            $style = 'bhavik.css';
+            $script = 'bhavik.js';
         }elseif ( in_array( $slug, array( 'recycled-plastics','ps','abs','eva','pvc','pp','ldpe','hdpe', 'material', 'materials' ), true ) || 'page-templates/template-material.php' === $template || 'page-templates/template-material-Recycled-Plastics.php' === $template || 'page-templates/template-material-PS.php' === $template || 'page-templates/template-material-ABS.php' === $template || 'page-templates/template-material-EVA.php' === $template || 'page-templates/template-material-PVC.php' === $template || 'page-templates/template-material-PP.php' === $template || 'page-templates/template-material-LDPE.php' === $template  ) {
             $style = 'material.css';
             $script = 'material.js';
@@ -235,6 +239,46 @@ function ab_ensure_product_directory_pages() {
 
     update_option( 'ab_product_directory_pages_ready', 1 );
 }
+/**
+ * Create the Bhavik Enterprises page once on an already-live site.
+ * `after_switch_theme` only fires on activation, so the starter data alone
+ * would never reach a site that is already running. Nothing existing is
+ * overwritten: the page is only created when the slug is missing, and meta
+ * values are only written when they are still empty.
+ */
+add_action( 'init', 'ab_ensure_bhavik_page', 31 );
+function ab_ensure_bhavik_page() {
+    if ( get_option( 'ab_bhavik_page_ready' ) ) { return; }
+
+    $defaults = require get_template_directory() . '/inc/default-content.php';
+    $page_data = null;
+    foreach ( $defaults['pages'] as $candidate ) {
+        if ( isset( $candidate['slug'] ) && 'bhavik-enterprises' === $candidate['slug'] ) { $page_data = $candidate; break; }
+    }
+    if ( ! $page_data ) { return; }
+
+    $page = get_page_by_path( $page_data['slug'], OBJECT, 'page' );
+    if ( $page ) {
+        $page_id = (int) $page->ID;
+    } else {
+        $page_id = wp_insert_post( array(
+            'post_type' => 'page',
+            'post_status' => 'publish',
+            'post_title' => $page_data['title'],
+            'post_name' => $page_data['slug'],
+        ), true );
+        if ( is_wp_error( $page_id ) || ! $page_id ) { return; }
+    }
+
+    if ( ! get_post_meta( $page_id, '_wp_page_template', true ) ) { update_post_meta( $page_id, '_wp_page_template', $page_data['template'] ); }
+    if ( ! get_post_meta( $page_id, 'ab_meta_title', true ) ) { update_post_meta( $page_id, 'ab_meta_title', $page_data['seo_title'] ); }
+    if ( ! get_post_meta( $page_id, 'ab_meta_description', true ) ) { update_post_meta( $page_id, 'ab_meta_description', $page_data['seo_description'] ); }
+    if ( ! get_post_meta( $page_id, 'ab_schema_type', true ) ) { update_post_meta( $page_id, 'ab_schema_type', $page_data['schema_type'] ); }
+    if ( ! get_post_meta( $page_id, 'ab_page_faqs', true ) && ! empty( $page_data['faqs'] ) ) { update_post_meta( $page_id, 'ab_page_faqs', $page_data['faqs'] ); }
+
+    update_option( 'ab_bhavik_page_ready', 1 );
+}
+
 function ab_primary_menu_fallback() {
     $items = array(
         array( 'Home', home_url( '/' ) ),
@@ -530,7 +574,7 @@ function ab_handle_material_enquiry() {
         $required = isset( $_POST[ $required_key ] ) && is_scalar( $_POST[ $required_key ] ) ? sanitize_textarea_field( wp_unslash( $_POST[ $required_key ] ) ) : '';
         if ( $name && is_email( $email ) && $required ) {
             $labels = array(
-                'company' => 'Company', 'topic' => 'Material / topic', 'material_type' => 'Material type', 'processing_method' => 'Processing method', 'manufacturer' => 'Manufacturer / source', 'grade' => 'Grade', 'form' => 'Form', 'color' => 'Color', 'quantity' => 'Quantity', 'destination' => 'Destination', 'requirement' => 'Requirement', 'pack_size' => 'Pack size', 'frequency' => 'Frequency', 'delivery_date' => 'Required delivery date', 'documents' => 'Documents needed', 'notes' => 'Additional notes', 'message' => 'Message',
+                'company' => 'Company', 'phone' => 'Phone', 'topic' => 'Material / topic', 'material_type' => 'Material type', 'processing_method' => 'Processing method', 'manufacturer' => 'Manufacturer / source', 'grade' => 'Grade', 'form' => 'Form', 'color' => 'Color', 'quantity' => 'Quantity', 'destination' => 'Destination', 'requirement' => 'Requirement', 'pack_size' => 'Pack size', 'frequency' => 'Frequency', 'delivery_date' => 'Required delivery date', 'documents' => 'Documents needed', 'notes' => 'Additional notes', 'message' => 'Message',
             );
             $lines = array( 'Name: ' . $name, 'Email: ' . $email );
             foreach ( $labels as $field => $label ) { if ( isset( $_POST[ $field ] ) && is_scalar( $_POST[ $field ] ) && '' !== (string) $_POST[ $field ] ) { $lines[] = $label . ': ' . sanitize_textarea_field( wp_unslash( $_POST[ $field ] ) ); } }

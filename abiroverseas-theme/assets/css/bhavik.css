@@ -1,0 +1,1886 @@
+/* =========================================================================
+   BHAVIK ENTERPRISES — AUTHORISED DISTRIBUTOR PAGE
+   -------------------------------------------------------------------------
+   Page stylesheet for page-template/template-bhavik-enterprises.php.
+
+   Banner rules here are *geometry + type only*. The banner background,
+   identical top/bottom spacing (--ab-banner-pad), the stacked order at
+   <=1023px, the 500px / 350px media heights and the eyebrow contract all come
+   from the global banner layer in site.css, which loads after this file. So
+   this page cannot drift from the rest of the site's banner system.
+
+   Sections keep a `bv-` prefix so nothing here can touch another template.
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   1. Page tokens and base
+   ------------------------------------------------------------------------- */
+
+.bv-page {
+    --bv-teal: var(--ab-teal, #008080);
+    --bv-blue: var(--ab-blue, #1D4E9F);
+    --bv-orange: var(--ab-orange, #F58220);
+    --bv-ink: var(--ab-ink, #142334);
+    --bv-muted: var(--ab-muted, #667685);
+    --bv-line: rgba(0, 128, 128, .13);
+    --bv-surface: #f7faf9;
+    color: var(--bv-ink);
+    overflow: clip;
+}
+
+.bv-page h2,
+.bv-page h3 {
+    color: var(--bv-ink);
+    text-wrap: balance;
+}
+
+.bv-page h2 {
+    margin: 0 0 14px;
+    font-size: clamp(29px, 3.1vw, 42px);
+    line-height: 1.14;
+    letter-spacing: -.035em;
+}
+
+.bv-page h3 {
+    margin: 0;
+    font-size: 19px;
+    line-height: 1.3;
+    letter-spacing: -.012em;
+}
+
+.bv-page p {
+    color: #536572;
+    line-height: 1.75;
+}
+
+/* Every section here is a scroll target; keep the sticky header clear. */
+.bv-page .ab-section {
+    position: relative;
+    scroll-margin-top: 100px;
+}
+
+.bv-page .ab-section--white {
+    background: linear-gradient(180deg, #fff 0%, #fbfdfc 100%);
+}
+
+/* Buttons. The shared .ab-btn base lives in a page stylesheet, so this page
+   states its own complete base instead of inheriting one it never loads. */
+.bv-page .ab-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 50px;
+    padding: 13px 21px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--bv-orange);
+    color: #fff;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 750;
+    letter-spacing: .04em;
+    line-height: 1.2;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(245, 130, 32, .18), 0 12px 28px rgba(245, 130, 32, .14);
+    transition: transform .22s ease, box-shadow .22s ease, background .22s ease, color .22s ease;
+    cursor: pointer;
+}
+
+.bv-page .ab-btn:hover {
+    transform: translateY(-2px);
+    background: #ff963b;
+    box-shadow: 0 6px 16px rgba(245, 130, 32, .22), 0 18px 36px rgba(245, 130, 32, .18);
+}
+
+.bv-page .ab-btn:active {
+    transform: translateY(0);
+}
+
+.bv-page .ab-btn .ab-icon {
+    width: 17px;
+    height: 17px;
+}
+
+.bv-page .ab-btn--blue {
+    background: var(--bv-blue);
+    box-shadow: 0 8px 20px rgba(29, 78, 159, .2);
+}
+
+.bv-page .ab-btn--blue:hover {
+    background: #153e82;
+}
+
+.bv-page .ab-btn--light {
+    background: #fff;
+    color: var(--bv-blue);
+    box-shadow: 0 5px 16px rgba(22, 44, 62, .09);
+}
+
+.bv-page .ab-btn--light:hover {
+    background: #eff5fb;
+}
+
+.bv-page .ab-btn--ghost {
+    background: rgba(255, 255, 255, .1);
+    color: #eafaf6;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .32);
+}
+
+.bv-page .ab-btn--ghost:hover {
+    background: rgba(255, 255, 255, .18);
+}
+
+.bv-text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--bv-blue);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.5;
+    text-decoration: none;
+}
+
+.bv-text-link .ab-icon {
+    width: 17px;
+    height: 17px;
+}
+
+.bv-text-link:hover {
+    color: var(--bv-teal);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* -------------------------------------------------------------------------
+   2. Banner
+   ------------------------------------------------------------------------- */
+
+.bv-page .ab-products-breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+    margin: 0 0 18px;
+    color: #73828a;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.bv-page .ab-products-breadcrumbs a {
+    color: var(--bv-blue);
+    text-decoration: none;
+}
+
+.bv-page .ab-products-breadcrumbs a:hover {
+    color: var(--bv-teal);
+}
+
+.bv-page .ab-products-hero-copy > .ab-eyebrow {
+    margin-bottom: 14px;
+}
+
+.bv-page .ab-products-hero-copy h1 {
+    max-width: 760px;
+    margin: 0 0 18px;
+    font-size: clamp(34px, 4.1vw, 58px);
+    line-height: 1.08;
+    letter-spacing: -.045em;
+    text-wrap: balance;
+}
+
+.bv-page .ab-products-hero-copy h1 span {
+    color: var(--bv-teal);
+}
+
+.bv-page .ab-products-hero-copy > p {
+    max-width: 620px;
+    margin: 0;
+    color: #536572;
+    font-size: clamp(15px, 1.3vw, 17px);
+    line-height: 1.75;
+}
+
+.bv-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.bv-page .ab-products-hero-proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 22px;
+    margin-top: 26px;
+    padding-top: 21px;
+    border-top: 1px solid var(--bv-line);
+}
+
+.bv-page .ab-products-hero-proof span {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: #53666d;
+    font-size: 17px;
+    font-weight: 650;
+    line-height: 1.5;
+}
+
+.bv-page .ab-products-hero-proof i {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    flex: 0 0 8px;
+    border-radius: 50%;
+    background: var(--bv-orange);
+    box-shadow: 0 0 0 4px rgba(245, 130, 32, .11);
+}
+
+/* Banner art: same panel language as the product directory banners. */
+.bv-page .ab-products-hero-art {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    border: 0;
+    border-radius: 28px;
+    background: linear-gradient(140deg, #142e42, #0e5668 70%, #197a7a);
+    box-shadow: 0 6px 16px rgba(17, 57, 70, .12), 0 20px 45px rgba(17, 57, 70, .18), 0 35px 70px rgba(17, 57, 70, .10);
+    transform: translateZ(0);
+}
+
+.bv-page .ab-products-hero-art > img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform .7s cubic-bezier(.2, .65, .3, 1);
+}
+
+.bv-page .ab-products-hero-art:hover > img {
+    transform: scale(1.035);
+}
+
+.bv-page .ab-products-hero-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(145deg, rgba(255, 255, 255, .08), transparent 42%, rgba(3, 21, 38, .32));
+    pointer-events: none;
+}
+
+.bv-page .ab-products-art-tag {
+    position: absolute;
+    z-index: 2;
+    top: 20px;
+    right: 20px;
+    max-width: calc(100% - 40px);
+    padding: 9px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .15);
+    color: #ecf8f5;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .12);
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.bv-page .ab-products-art-caption {
+    position: absolute;
+    z-index: 2;
+    right: 20px;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 350px;
+    padding: 15px 17px;
+    border-radius: 15px;
+    background: rgba(245, 250, 250, .9);
+    color: var(--bv-ink);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .1), 0 14px 32px rgba(0, 0, 0, .12);
+}
+
+.bv-page .ab-products-caption-dot {
+    width: 9px;
+    height: 9px;
+    flex: 0 0 9px;
+    border-radius: 50%;
+    background: var(--bv-orange);
+    box-shadow: 0 0 0 5px rgba(245, 130, 32, .12);
+}
+
+.bv-page .ab-products-art-caption > span:last-child {
+    display: grid;
+    gap: 3px;
+    min-width: 0;
+}
+
+.bv-page .ab-products-art-caption small {
+    color: #087b76;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+}
+
+.bv-page .ab-products-art-caption strong {
+    font-size: 15px;
+    line-height: 1.35;
+}
+
+.bv-page .ab-products-art-orbit {
+    position: absolute;
+    z-index: 1;
+    top: 40%;
+    right: -48px;
+    width: 155px;
+    height: 155px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .24), 0 0 0 20px rgba(255, 255, 255, .06), 0 0 0 42px rgba(255, 255, 255, .035);
+    pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------
+   3. Trust strip
+   ------------------------------------------------------------------------- */
+
+.bv-trust {
+    padding: 30px 0;
+    border-bottom: 1px solid var(--bv-line);
+    background: #fff;
+}
+
+.bv-trust-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px 26px;
+}
+
+.bv-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+}
+
+.bv-trust-icon {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    place-items: center;
+    border-radius: 13px;
+    background: rgba(0, 128, 128, .1);
+    color: var(--bv-teal);
+}
+
+.bv-trust-icon--orange {
+    background: rgba(245, 130, 32, .12);
+    color: #bd6210;
+}
+
+.bv-trust-icon .ab-icon {
+    width: 21px;
+    height: 21px;
+}
+
+.bv-trust-item > span:last-child {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+}
+
+.bv-trust-item strong {
+    font-size: 15px;
+    font-weight: 750;
+    line-height: 1.35;
+}
+
+.bv-trust-item small {
+    color: var(--bv-muted);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+/* Section surfaces: the page alternates plain, tinted and white bands. */
+.bv-about,
+.bv-process,
+.bv-faq,
+.bv-contact {
+    background: #fff;
+}
+
+.bv-industries {
+    background: linear-gradient(180deg, #fbfdfc 0%, #f3f9f8 100%);
+}
+
+/* The banner art is the containing block for its tag, caption and orbit. */
+.bv-hero-art {
+    position: relative;
+}
+
+/* -------------------------------------------------------------------------
+   4. Shared section head
+   ------------------------------------------------------------------------- */
+
+.bv-section-head {
+    max-width: 790px;
+    margin-bottom: 34px;
+}
+
+.bv-section-head .ab-eyebrow {
+    margin-bottom: 13px;
+}
+
+.bv-section-head p {
+    margin: 0;
+    font-size: clamp(15px, 1.2vw, 17px);
+}
+
+/* -------------------------------------------------------------------------
+   5. About — "Who we are"
+   ------------------------------------------------------------------------- */
+
+.bv-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
+    align-items: center;
+    gap: clamp(32px, 5vw, 66px);
+}
+
+.bv-split-copy {
+    min-width: 0;
+}
+
+.bv-split-copy .ab-eyebrow {
+    margin-bottom: 13px;
+}
+
+.bv-split-copy p {
+    margin: 0 0 16px;
+    font-size: clamp(15px, 1.2vw, 17px);
+}
+
+.bv-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin: 28px 0 26px;
+    padding: 22px 0;
+    border-top: 1px solid var(--bv-line);
+    border-bottom: 1px solid var(--bv-line);
+}
+
+.bv-stat {
+    display: grid;
+    gap: 3px;
+    min-width: 0;
+}
+
+.bv-stat strong {
+    color: var(--bv-teal);
+    font-size: clamp(28px, 2.8vw, 38px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -.03em;
+}
+
+.bv-stat span {
+    color: var(--bv-muted);
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.bv-split-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 22px;
+}
+
+.bv-split-media {
+    position: relative;
+    min-width: 0;
+}
+
+.bv-media-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 26px;
+    background: #dfeaea;
+    box-shadow: 0 6px 16px rgba(17, 57, 70, .1), 0 22px 50px rgba(17, 57, 70, .14);
+}
+
+.bv-media-frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+    object-fit: cover;
+}
+
+.bv-media-badge {
+    position: absolute;
+    right: 18px;
+    bottom: -18px;
+    left: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(17, 57, 70, .1), 0 18px 40px rgba(17, 57, 70, .14);
+}
+
+.bv-media-badge-icon {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    place-items: center;
+    border-radius: 12px;
+    background: rgba(0, 128, 128, .1);
+    color: var(--bv-teal);
+}
+
+.bv-media-badge-icon .ab-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.bv-media-badge > span:last-child {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.bv-media-badge strong {
+    font-size: 15px;
+    font-weight: 750;
+    line-height: 1.35;
+}
+
+.bv-media-badge small {
+    color: var(--bv-muted);
+    font-size: 12.5px;
+    line-height: 1.45;
+}
+
+/* -------------------------------------------------------------------------
+   6. Products
+   ------------------------------------------------------------------------- */
+
+.bv-products {
+    padding-bottom: clamp(70px, 8vw, 108px);
+}
+
+.bv-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.bv-product-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+    padding: 24px 22px 20px;
+    border: 1px solid rgba(0, 128, 128, .1);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(17, 57, 70, .04), 0 14px 32px rgba(17, 57, 70, .06);
+    transition: transform .3s cubic-bezier(.2, .7, .25, 1), box-shadow .3s ease, border-color .3s ease;
+}
+
+.bv-product-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0, 128, 128, .22);
+    box-shadow: 0 4px 10px rgba(17, 57, 70, .06), 0 22px 44px rgba(17, 57, 70, .1);
+}
+
+.bv-card-icon {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border-radius: 14px;
+    background: linear-gradient(150deg, rgba(0, 128, 128, .13), rgba(0, 128, 128, .06));
+    color: var(--bv-teal);
+}
+
+.bv-card-icon--soft {
+    background: rgba(29, 78, 159, .1);
+    color: var(--bv-blue);
+}
+
+.bv-card-icon .ab-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.bv-card-body {
+    display: grid;
+    gap: 5px;
+    min-width: 0;
+}
+
+.bv-card-sub {
+    color: #087b76;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    line-height: 1.45;
+    text-transform: uppercase;
+}
+
+.bv-card-body p {
+    margin: 4px 0 0;
+    font-size: 14.5px;
+    line-height: 1.7;
+}
+
+.bv-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid rgba(0, 128, 128, .1);
+    color: var(--bv-blue);
+    font-size: 13px;
+    font-weight: 750;
+    letter-spacing: .03em;
+    line-height: 1.4;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.bv-card-link .ab-icon {
+    width: 15px;
+    height: 15px;
+    transition: transform .25s ease;
+}
+
+.bv-card-link:hover {
+    color: var(--bv-teal);
+}
+
+.bv-card-link:hover .ab-icon {
+    transform: translateX(3px);
+}
+
+/* -------------------------------------------------------------------------
+   7. Industries
+   ------------------------------------------------------------------------- */
+
+.bv-industry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.bv-industry-card {
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+    padding: 22px 20px;
+    border-radius: 18px;
+    background: linear-gradient(160deg, #f6faf9, #eef5f4);
+    box-shadow: inset 0 0 0 1px rgba(0, 128, 128, .09);
+}
+
+.bv-industry-card h3 {
+    font-size: 17px;
+}
+
+.bv-industry-card p {
+    margin: 0;
+    color: var(--bv-muted);
+    font-size: 13.5px;
+    line-height: 1.6;
+}
+
+/* -------------------------------------------------------------------------
+   8. Quote process
+   ------------------------------------------------------------------------- */
+
+.bv-steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.bv-step {
+    position: relative;
+    display: grid;
+    gap: 9px;
+    min-width: 0;
+    padding: 24px 20px 22px;
+    border: 1px solid rgba(0, 128, 128, .1);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(17, 57, 70, .04), 0 12px 28px rgba(17, 57, 70, .05);
+}
+
+.bv-step-no {
+    display: inline-grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 11px;
+    background: var(--bv-ink);
+    color: #ecf8f5;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .04em;
+}
+
+.bv-step h3 {
+    font-size: 16.5px;
+}
+
+.bv-step p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+/* Documentation / supply-support strip that closes the process section. */
+.bv-docs {
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: clamp(24px, 3.4vw, 44px);
+    margin-top: 26px;
+    padding: clamp(22px, 3vw, 32px);
+    border-radius: 22px;
+    background: linear-gradient(150deg, #f4f9f8, #eef5f4);
+    box-shadow: inset 0 0 0 1px rgba(0, 128, 128, .1);
+}
+
+.bv-docs-copy .ab-eyebrow {
+    margin-bottom: 10px;
+}
+
+.bv-docs-copy h3 {
+    margin-bottom: 8px;
+    font-size: clamp(19px, 1.9vw, 23px);
+}
+
+.bv-docs-copy p {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.7;
+}
+
+.bv-docs-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.bv-docs-item {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+    padding: 16px 15px;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(17, 57, 70, .05);
+}
+
+.bv-docs-item > span {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 4px;
+    place-items: center;
+    border-radius: 10px;
+    background: rgba(0, 128, 128, .1);
+    color: var(--bv-teal);
+}
+
+.bv-docs-item .ab-icon {
+    width: 17px;
+    height: 17px;
+}
+
+.bv-docs-item strong {
+    font-size: 14px;
+    font-weight: 750;
+    line-height: 1.4;
+}
+
+.bv-docs-item small {
+    color: var(--bv-muted);
+    font-size: 12.5px;
+    line-height: 1.5;
+}
+
+/* -------------------------------------------------------------------------
+   9. CTA band
+   ------------------------------------------------------------------------- */
+
+.bv-cta {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(44px, 6vw, 76px) 0;
+    background: linear-gradient(112deg, #12374a 0%, #174a57 56%, #0f6262 100%);
+}
+
+.bv-cta::after {
+    content: "";
+    position: absolute;
+    top: -150px;
+    right: -70px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .12), 0 0 0 26px rgba(255, 255, 255, .025), 0 0 0 58px rgba(255, 255, 255, .02);
+    pointer-events: none;
+}
+
+.bv-cta-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 26px 40px;
+}
+
+.bv-cta-copy {
+    max-width: 680px;
+}
+
+.bv-cta-eyebrow {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+    color: #8fdcd2;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .13em;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+.bv-cta-eyebrow::before {
+    content: "";
+    width: 24px;
+    height: 2px;
+    flex: 0 0 24px;
+    margin-top: calc(.7em - 1px);
+    border-radius: 4px;
+    background: var(--bv-orange);
+}
+
+.bv-cta h2 {
+    margin: 0 0 10px;
+    color: #fff;
+    font-size: clamp(26px, 2.9vw, 40px);
+    line-height: 1.15;
+    letter-spacing: -.035em;
+}
+
+.bv-cta p {
+    margin: 0;
+    color: #c8e4e0;
+    font-size: clamp(15px, 1.2vw, 17px);
+}
+
+.bv-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    flex: 0 0 auto;
+}
+
+/* -------------------------------------------------------------------------
+   10. FAQ
+   ------------------------------------------------------------------------- */
+
+.bv-faq-layout {
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    align-items: start;
+    gap: clamp(30px, 4.5vw, 58px);
+}
+
+.bv-faq-side {
+    display: grid;
+    gap: 14px;
+    min-width: 0;
+    justify-items: start;
+}
+
+.bv-faq-side .ab-eyebrow {
+    margin-bottom: 0;
+}
+
+.bv-faq-side h2 {
+    margin: 0;
+}
+
+.bv-faq-side p {
+    margin: 0;
+    font-size: clamp(15px, 1.2vw, 17px);
+}
+
+.bv-faq-list {
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+}
+
+.bv-faq-item {
+    border: 1px solid rgba(0, 128, 128, .11);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(17, 57, 70, .04);
+    transition: border-color .25s ease, box-shadow .25s ease;
+}
+
+.bv-faq-item[open] {
+    border-color: rgba(0, 128, 128, .24);
+    box-shadow: 0 4px 12px rgba(17, 57, 70, .07), 0 16px 34px rgba(17, 57, 70, .07);
+}
+
+.bv-faq-item summary {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 17px 48px 17px 18px;
+    color: var(--bv-ink);
+    cursor: pointer;
+    font-size: 15.5px;
+    font-weight: 700;
+    line-height: 1.5;
+    list-style: none;
+}
+
+.bv-faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.bv-faq-item summary::after {
+    content: "+";
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    display: grid;
+    width: 24px;
+    height: 24px;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(0, 128, 128, .1);
+    color: var(--bv-teal);
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1;
+    transform: translateY(-50%);
+    transition: background .25s ease, color .25s ease;
+}
+
+.bv-faq-item[open] summary::after {
+    content: "–";
+    background: var(--bv-teal);
+    color: #fff;
+}
+
+.bv-faq-item summary:focus-visible {
+    outline: 3px solid rgba(0, 128, 128, .3);
+    outline-offset: 2px;
+    border-radius: 14px;
+}
+
+.bv-faq-answer {
+    padding: 0 18px 18px;
+}
+
+.bv-faq-answer p {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.72;
+}
+
+/* -------------------------------------------------------------------------
+   11. Contact block
+   ------------------------------------------------------------------------- */
+
+.bv-contact-head {
+    max-width: 760px;
+    margin-bottom: 30px;
+}
+
+.bv-contact-head .ab-eyebrow {
+    margin-bottom: 13px;
+}
+
+.bv-contact-head p {
+    margin: 0;
+    font-size: clamp(15px, 1.2vw, 17px);
+}
+
+.bv-contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.bv-contact-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid rgba(0, 128, 128, .12);
+    border-radius: 18px;
+    background: #fff;
+    color: var(--bv-ink);
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(17, 57, 70, .04), 0 12px 28px rgba(17, 57, 70, .05);
+    transition: transform .28s cubic-bezier(.2, .7, .25, 1), box-shadow .28s ease, border-color .28s ease;
+}
+
+.bv-contact-row:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 128, 128, .26);
+    box-shadow: 0 4px 10px rgba(17, 57, 70, .07), 0 20px 40px rgba(17, 57, 70, .09);
+}
+
+.bv-contact-row--wide {
+    grid-column: 1 / -1;
+}
+
+.bv-contact-mark {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    place-items: center;
+    border-radius: 13px;
+    background: rgba(0, 128, 128, .1);
+    color: var(--bv-teal);
+}
+
+.bv-contact-mark--orange {
+    background: rgba(245, 130, 32, .12);
+    color: #bd6210;
+}
+
+.bv-contact-mark--green {
+    background: rgba(37, 211, 102, .13);
+    color: #1a9553;
+}
+
+.bv-contact-mark .ab-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.bv-contact-text {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.bv-contact-text small {
+    color: var(--bv-muted);
+    font-size: 11.5px;
+    font-weight: 750;
+    letter-spacing: .08em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.bv-contact-text strong {
+    font-size: 15.5px;
+    font-weight: 700;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.bv-contact-go {
+    width: 17px;
+    height: 17px;
+    margin-left: auto;
+    flex: 0 0 17px;
+    color: #9aabb2;
+    transition: transform .25s ease, color .25s ease;
+}
+
+.bv-contact-row:hover .bv-contact-go {
+    transform: translateX(3px);
+    color: var(--bv-teal);
+}
+
+.bv-presence {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 18px;
+    margin-top: 4px;
+    padding: 24px;
+    border-radius: 20px;
+    background: linear-gradient(150deg, #10333f, #14515a 65%, #0f6262);
+    box-shadow: 0 4px 12px rgba(9, 38, 46, .16), 0 22px 46px rgba(9, 38, 46, .18);
+}
+
+.bv-presence-title {
+    grid-column: 1 / -1;
+    color: #8fdcd2;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .13em;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+.bv-presence-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+}
+
+.bv-presence-mark {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .1);
+    color: #8fdcd2;
+}
+
+.bv-presence-mark--orange {
+    color: #ffb877;
+}
+
+.bv-presence-mark .ab-icon {
+    width: 19px;
+    height: 19px;
+}
+
+.bv-presence-item > span:last-child {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.bv-presence-item small {
+    color: #9fc4c3;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.bv-presence-item strong {
+    color: #fff;
+    font-size: 17px;
+    font-weight: 750;
+    line-height: 1.35;
+}
+
+/* -------------------------------------------------------------------------
+   12. Enquiry section (last on the page): copy left, form right.
+   The explicit order values are the guard: at <=1023px the copy is always
+   first and the form always follows it.
+   ------------------------------------------------------------------------- */
+
+.bv-enquiry {
+    background: linear-gradient(180deg, #f4f9f8 0%, #eef5f4 100%);
+    border-top: 1px solid var(--bv-line);
+}
+
+.bv-notice {
+    display: grid;
+    gap: 4px;
+    margin-bottom: 24px;
+    padding: 16px 18px;
+    border-radius: 14px;
+    font-size: 14.5px;
+    line-height: 1.6;
+}
+
+.bv-notice strong {
+    font-size: 15.5px;
+}
+
+.bv-notice--success {
+    background: #e7f6ef;
+    color: #17614a;
+    box-shadow: inset 0 0 0 1px rgba(23, 97, 74, .16);
+}
+
+.bv-notice--error {
+    background: #fdeeea;
+    color: #96331d;
+    box-shadow: inset 0 0 0 1px rgba(150, 51, 29, .18);
+}
+
+.bv-enquiry-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.06fr);
+    align-items: start;
+    gap: clamp(30px, 4.5vw, 54px);
+}
+
+.bv-enquiry-copy {
+    order: 1;
+    min-width: 0;
+    padding-top: 6px;
+}
+
+.bv-enquiry-copy .ab-eyebrow {
+    margin-bottom: 13px;
+}
+
+.bv-enquiry-copy h2 {
+    margin: 0 0 14px;
+}
+
+.bv-enquiry-copy > p {
+    margin: 0 0 22px;
+    font-size: clamp(15px, 1.2vw, 17px);
+}
+
+.bv-enquiry-list {
+    display: grid;
+    gap: 12px;
+    margin: 0 0 26px;
+    padding: 0;
+    list-style: none;
+}
+
+.bv-enquiry-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: #46596a;
+    font-size: 14.5px;
+    line-height: 1.6;
+}
+
+.bv-enquiry-list li span {
+    display: grid;
+    width: 27px;
+    height: 27px;
+    flex: 0 0 27px;
+    place-items: center;
+    border-radius: 8px;
+    background: rgba(0, 128, 128, .1);
+    color: #087b76;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .02em;
+}
+
+.bv-enquiry-direct {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.bv-enquiry-direct a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 14px;
+    border-radius: 14px;
+    background: #fff;
+    color: var(--bv-ink);
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(17, 57, 70, .05), 0 10px 24px rgba(17, 57, 70, .06);
+}
+
+.bv-enquiry-direct a:hover {
+    box-shadow: 0 4px 10px rgba(17, 57, 70, .07), 0 16px 32px rgba(17, 57, 70, .09);
+}
+
+.bv-enquiry-direct a > span:last-child {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.bv-enquiry-direct small {
+    color: var(--bv-muted);
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: .07em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.bv-enquiry-direct strong {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+/* The form card itself. */
+.bv-form {
+    order: 2;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 26px 24px;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(17, 57, 70, .06), 0 22px 48px rgba(17, 57, 70, .1);
+}
+
+.bv-page .ab-honeypot {
+    position: absolute !important;
+    left: -10000px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+}
+
+.bv-form-head {
+    margin-bottom: 20px;
+}
+
+.bv-form-step {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 9px;
+    color: #087b76;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .11em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.bv-form-step i {
+    display: inline-block;
+    width: 18px;
+    height: 2px;
+    border-radius: 4px;
+    background: var(--bv-orange);
+}
+
+.bv-form-head h3 {
+    margin: 0 0 5px;
+    font-size: clamp(20px, 2vw, 24px);
+    line-height: 1.25;
+}
+
+.bv-form-head p {
+    margin: 0;
+    color: var(--bv-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.bv-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.bv-field {
+    display: grid;
+    gap: 7px;
+    min-width: 0;
+}
+
+.bv-field--full {
+    grid-column: 1 / -1;
+}
+
+.bv-field label {
+    color: #344953;
+    font-size: 13px;
+    font-weight: 750;
+    line-height: 1.5;
+}
+
+.bv-field label span {
+    color: var(--bv-orange);
+}
+
+.bv-field input,
+.bv-field select,
+.bv-field textarea {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 12px 13px;
+    border: 0;
+    border-radius: 10px;
+    outline: none;
+    background: #f3f7f6;
+    color: var(--bv-ink);
+    font: inherit;
+    font-size: 14.5px;
+    line-height: 1.5;
+    box-shadow: inset 0 2px 5px rgba(22, 44, 62, .035), 0 1px 0 rgba(255, 255, 255, .95);
+    transition: box-shadow .2s ease, background .2s ease;
+}
+
+.bv-field textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.bv-field input::placeholder,
+.bv-field textarea::placeholder {
+    color: #8b9ba1;
+    opacity: 1;
+}
+
+.bv-field input:focus,
+.bv-field select:focus,
+.bv-field textarea:focus {
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 128, 128, .13), 0 5px 14px rgba(22, 44, 62, .06);
+}
+
+.bv-field input:focus-visible,
+.bv-field select:focus-visible,
+.bv-field textarea:focus-visible,
+.bv-form .ab-btn:focus-visible {
+    outline: 3px solid rgba(0, 128, 128, .3);
+    outline-offset: 3px;
+}
+
+.bv-form-foot {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 13px 17px;
+    margin-top: 20px;
+}
+
+.bv-form-foot .ab-btn {
+    cursor: pointer;
+}
+
+.bv-form-note {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 7px;
+    max-width: 250px;
+    color: #718188;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.bv-form-note span {
+    display: grid;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    place-items: center;
+    border-radius: 50%;
+    background: #e3f4ed;
+    color: #247a5c;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+/* -------------------------------------------------------------------------
+   13. Reveal animation (JS adds .is-visible; content is visible without JS)
+   ------------------------------------------------------------------------- */
+
+.bv-reveal.is-visible {
+    animation: bv-fade-up .6s cubic-bezier(.2, .7, .25, 1) both;
+}
+
+.bv-reveal-delay-1.is-visible {
+    animation-delay: .08s;
+}
+
+@keyframes bv-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* -------------------------------------------------------------------------
+   14. Responsive
+   ------------------------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+    .bv-page .ab-wrap {
+        width: min(1240px, calc(100% - 42px));
+    }
+
+    .bv-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .bv-industry-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .bv-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .bv-trust-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px 22px;
+    }
+}
+
+/* Tablet portrait and below: one column, copy first, media and form after. */
+@media (max-width: 1023px) {
+    .bv-page .ab-products-hero-copy h1 {
+        max-width: 100%;
+        font-size: clamp(30px, 5.4vw, 44px);
+    }
+
+    .bv-page .ab-products-hero-copy > p {
+        max-width: 100%;
+    }
+
+    .bv-hero-actions .ab-btn {
+        flex: 0 1 auto;
+    }
+
+    .bv-page .ab-products-hero-proof {
+        gap: 10px 20px;
+        margin-top: 22px;
+        padding-top: 18px;
+    }
+
+    .bv-page .ab-products-hero-proof span {
+        font-size: 14px;
+    }
+
+    .bv-split,
+    .bv-faq-layout,
+    .bv-enquiry-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 30px;
+    }
+
+    .bv-split-copy {
+        order: 1;
+    }
+
+    .bv-split-media {
+        order: 2;
+        width: 100%;
+    }
+
+    .bv-faq-side {
+        order: 1;
+    }
+
+    .bv-faq-list {
+        order: 2;
+    }
+
+    .bv-enquiry-copy {
+        order: 1;
+    }
+
+    /* The form always follows the copy — never jumps above it. */
+    .bv-form {
+        order: 2;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .bv-media-frame img {
+        min-height: 320px;
+        height: 320px;
+    }
+
+    .bv-media-badge {
+        position: static;
+        margin: -26px 16px 0;
+        width: auto;
+    }
+
+    .bv-contact-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .bv-docs {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 22px;
+    }
+
+    .bv-cta-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .bv-cta-actions {
+        width: 100%;
+    }
+
+    .bv-page .ab-products-hero-art {
+        border-radius: 24px;
+    }
+}
+
+@media (max-width: 760px) {
+    .bv-page .ab-section {
+        scroll-margin-top: 84px;
+    }
+
+    .bv-page .ab-products-hero-copy h1 {
+        font-size: clamp(28px, 7.6vw, 38px);
+        letter-spacing: -.035em;
+    }
+
+    .bv-page .ab-products-hero-proof span {
+        font-size: 13px;
+    }
+
+    .bv-stats {
+        gap: 12px;
+        margin: 24px 0 22px;
+        padding: 18px 0;
+    }
+
+    .bv-stat span {
+        font-size: 12px;
+    }
+
+    .bv-form {
+        padding: 22px 18px;
+    }
+
+    .bv-form-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    .bv-field--full {
+        grid-column: auto;
+    }
+
+    .bv-form-foot {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .bv-form-foot .ab-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .bv-form-note {
+        max-width: none;
+    }
+
+    .bv-enquiry-direct {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .bv-page .ab-products-hero-art {
+        border-radius: 20px;
+    }
+
+    .bv-page .ab-products-art-tag {
+        top: 13px;
+        right: 13px;
+        font-size: 9px;
+    }
+
+    .bv-page .ab-products-art-caption {
+        right: 13px;
+        bottom: 13px;
+        left: 13px;
+        padding: 12px 13px;
+    }
+
+    .bv-page .ab-products-art-caption strong {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 600px) {
+    .bv-page .ab-wrap {
+        width: calc(100% - 36px);
+    }
+
+    .bv-page h2 {
+        font-size: clamp(25px, 7vw, 32px);
+    }
+
+    .bv-trust {
+        padding: 24px 0;
+    }
+
+    .bv-trust-grid,
+    .bv-contact-grid,
+    .bv-presence {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .bv-card-grid,
+    .bv-industry-grid,
+    .bv-steps,
+    .bv-docs-list {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .bv-hero-actions {
+        gap: 10px;
+    }
+
+    .bv-hero-actions .ab-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .bv-split-actions {
+        gap: 12px;
+    }
+
+    .bv-split-actions .ab-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Section visuals keep the theme's 350px phone rule. */
+    .bv-media-frame img {
+        height: 350px;
+        min-height: 350px;
+    }
+
+    .bv-media-badge {
+        margin: -20px 12px 0;
+        padding: 12px 13px;
+    }
+
+    .bv-media-badge strong {
+        font-size: 14px;
+    }
+
+    .bv-media-badge small {
+        font-size: 12px;
+    }
+
+    .bv-stats {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    .bv-stat {
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: baseline;
+        gap: 12px;
+    }
+
+    .bv-stat strong {
+        font-size: 28px;
+    }
+
+    .bv-cta-actions {
+        flex-direction: column;
+    }
+
+    .bv-cta-actions .ab-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .bv-presence {
+        padding: 20px 18px;
+    }
+
+    .bv-contact-row,
+    .bv-contact-row--wide {
+        grid-column: auto;
+        padding: 17px;
+        gap: 12px;
+    }
+
+    .bv-contact-text strong {
+        font-size: 14.5px;
+    }
+
+    .bv-contact-go {
+        display: none;
+    }
+
+    .bv-faq-item summary {
+        padding: 15px 46px 15px 16px;
+        font-size: 14.5px;
+    }
+
+    .bv-faq-answer {
+        padding: 0 16px 16px;
+    }
+}
+
+@media (max-width: 420px) {
+    .bv-trust-item {
+        gap: 11px;
+    }
+
+    .bv-trust-icon {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+    }
+
+    .bv-page .ab-btn {
+        padding: 12px 16px;
+        font-size: 13px;
+    }
+
+    .bv-page .ab-products-hero-proof {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bv-page *,
+    .bv-page *::before,
+    .bv-page *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
