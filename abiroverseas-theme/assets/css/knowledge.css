@@ -1,4 +1,5 @@
 /* Knowledge Center archive and article layouts. Shared header/footer styling lives in site.css. */
+/* Knowledge-specific tokens only; shared Abiroverseas tokens live in site.css. */
 :root {
     --kh-teal: #008080;
     --kh-blue: #1D4E9F;
@@ -10,23 +11,6 @@
     --kh-line: #dce5e5;
     --kh-mist: #eaf3f2;
     --kh-shadow: 0 18px 48px rgba(22, 44, 62, .10);
-    --ab-teal: var(--kh-teal);
-    --ab-blue: var(--kh-blue);
-    --ab-orange: var(--kh-orange);
-    --ab-charcoal: #4d4d4e;
-    --ab-ink: var(--kh-ink);
-    --ab-muted: var(--kh-muted);
-    --ab-paper: var(--kh-paper);
-    --ab-white: #fff;
-    --ab-line: var(--kh-line);
-    --ab-mist: var(--kh-mist);
-    --ab-blue-mist: #edf2fa;
-    --ab-shadow: var(--kh-shadow);
-    --ab-radius: 24px;
-    --ab-max: 1240px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: var(--kh-ink);
-    scroll-behavior: smooth
 }
 
 *,
