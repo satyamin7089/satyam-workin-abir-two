@@ -658,3 +658,398 @@ body { margin: 0; }
     flex-basis: 43px;
   }
 }
+
+/* =========================================================================
+   SHARED BANNER SYSTEM
+   -------------------------------------------------------------------------
+   One source of truth for every page banner (Home, About, Contact, Material,
+   Product Families / Range, Knowledge). This file is enqueued after the page
+   stylesheets, so these rules normalise the page-specific heroes without
+   touching their markup:
+
+     1. one identical banner background + decorative ring on every page,
+     2. identical top and bottom banner spacing on every page,
+     3. copy column and image / gallery column share one stretched grid row,
+        so both sides always start and end on the same vertical line,
+     4. tablet portrait and below stack as "content on top, image below",
+     5. one identical vertical rhythm for the content sections.
+   ========================================================================= */
+
+:root {
+    /* Banner surface: the About hero gradient, used by every page banner. */
+    --ab-banner-bg: radial-gradient(ellipse at 12% 42%, rgba(0, 128, 128, .09), transparent 38%),
+        linear-gradient(118deg, #f7faf9 0%, #f3f7f6 55%, #eaf1f2 100%);
+    /* Identical top / bottom banner spacing. */
+    --ab-banner-pad: 90px;
+    /* Identical column gap between the copy and the image. */
+    --ab-banner-gap: 48px;
+    /* Minimum height of the banner image so short copy still looks balanced. */
+    --ab-banner-media-min: 420px;
+    /* Identical vertical rhythm between content sections. */
+    --ab-section-pad: 100px;
+}
+
+/* 1. One background, one spacing, no per-page dividers. */
+.ab-about-hero,
+.ab-home-slide,
+.ab-contact-hero,
+.ab-prod-hero,
+.ab-products-page .ab-products-hero,
+.kh-hero,
+.kh-article-hero {
+    background: var(--ab-banner-bg);
+    border-bottom: 0;
+    padding-top: var(--ab-banner-pad);
+    padding-bottom: var(--ab-banner-pad);
+}
+
+/* Local stacking context so the decorative ring can sit above the banner
+   background while staying behind the banner content on every page. */
+.ab-home-hero,
+.ab-home-slide,
+.ab-about-hero,
+.ab-contact-hero,
+.ab-prod-hero,
+.ab-products-page .ab-products-hero,
+.kh-hero,
+.kh-article-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+/* One decorative ring, same size and same bottom-left position everywhere. */
+.ab-home-slide::before,
+.ab-about-hero::before,
+.ab-contact-hero::before,
+.ab-prod-hero::before,
+.ab-products-page .ab-products-hero::before,
+.kh-hero::before,
+.kh-article-hero::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 540px;
+    height: 540px;
+    top: auto;
+    right: auto;
+    bottom: -240px;
+    left: -210px;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    box-shadow: 0 0 0 1px rgba(0, 128, 128, .06),
+        0 0 0 42px rgba(0, 128, 128, .025),
+        0 0 0 88px rgba(0, 128, 128, .018);
+    pointer-events: none;
+}
+
+/* The ring now lives on the slide itself, so the old hero-level ring is off.
+   This also prevents a doubled ring on the home banner. */
+.ab-home-hero::before,
+.ab-home-hero::after {
+    content: none;
+}
+
+/* 3. One banner grid: copy and image share a single stretched row. */
+.ab-hero-grid,
+.ab-about-hero-grid,
+.ab-contact-hero-grid,
+.ab-prod-hero-grid,
+.ab-products-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+    align-items: stretch;
+    column-gap: var(--ab-banner-gap);
+    row-gap: var(--ab-banner-gap);
+}
+
+/* The copy column fills the row exactly like the image column does, and its
+   content is optically centred, so both columns share the same top and
+   bottom edge on the vertical line. */
+.ab-hero-copy,
+.ab-about-hero-copy,
+.ab-contact-hero-copy,
+.ab-prod-copy,
+.ab-products-hero-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: stretch;
+    max-width: 100%;
+    min-width: 0;
+    order: 1;
+}
+
+/* The image / slider column is always the full height of the same row.
+   Stretch (not height: 100%) keeps the row height definite for the image. */
+.ab-hero-art,
+.ab-home-slide .ab-hero-art,
+.ab-about-hero-art,
+.ab-contact-hero-art,
+.ab-products-hero-art,
+.ab-prod-hero .ab-product-gallery {
+    order: 2;
+    min-height: var(--ab-banner-media-min);
+    align-self: stretch;
+}
+
+/* Material pages: the thumbnail rail floats inside the image on desktop so
+   the image itself is the same height as the copy beside it. */
+@media (min-width: 1025px) {
+    .ab-prod-hero .ab-product-gallery {
+        position: relative;
+        display: block;
+        min-width: 0;
+    }
+
+    .ab-prod-hero .ab-product-gallery .ab-prod-art {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        min-height: 0;
+    }
+
+    .ab-prod-hero .ab-product-gallery .ab-gallery-thumbs {
+        position: absolute;
+        left: 50%;
+        bottom: 16px;
+        z-index: 6;
+        width: max-content;
+        max-width: calc(100% - 32px);
+        margin: 0;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, .93);
+        box-shadow: 0 10px 24px rgba(10, 40, 55, .22), inset 0 1px 0 #fff;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+}
+
+/* 4. Tablet portrait and below: content on top, image / slider below. */
+@media (max-width: 1024px) {
+    :root {
+        --ab-banner-pad: 64px;
+        --ab-banner-gap: 28px;
+        --ab-banner-media-min: 340px;
+    }
+
+    .ab-hero-grid,
+    .ab-home-slide--final .ab-hero-grid,
+    .ab-about-hero-grid,
+    .ab-contact-hero-grid,
+    .ab-prod-hero-grid,
+    .ab-products-hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: var(--ab-banner-gap);
+    }
+
+    .ab-home-slide--final .ab-hero-grid {
+        gap: var(--ab-banner-gap);
+    }
+
+    .ab-hero-copy,
+    .ab-about-hero-copy,
+    .ab-contact-hero-copy,
+    .ab-prod-copy,
+    .ab-products-hero-copy,
+    .ab-home-slide--final .ab-hero-copy {
+        order: 1;
+    }
+
+    .ab-hero-art,
+    .ab-home-slide .ab-hero-art,
+    .ab-home-slide--final .ab-hero-art,
+    .ab-about-hero-art,
+    .ab-contact-hero-art,
+    .ab-products-hero-art,
+    .ab-prod-hero .ab-product-gallery {
+        order: 2;
+        width: 100%;
+    }
+
+    .ab-prod-hero .ab-product-gallery {
+        min-height: 0;
+    }
+
+    .ab-prod-hero .ab-product-gallery .ab-prod-art {
+        min-height: var(--ab-banner-media-min);
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --ab-banner-pad: 48px;
+        --ab-banner-gap: 22px;
+        --ab-banner-media-min: 250px;
+    }
+}
+
+/* 5. Identical vertical rhythm between content sections on every page. */
+.ab-section,
+.ab-products-catalog,
+.ab-contact-main,
+.kh-library {
+    padding-top: var(--ab-section-pad);
+    padding-bottom: var(--ab-section-pad);
+}
+
+@media (max-width: 1100px) {
+    :root { --ab-section-pad: 84px; }
+}
+
+@media (max-width: 850px) {
+    :root { --ab-section-pad: 72px; }
+}
+
+@media (max-width: 600px) {
+    :root { --ab-section-pad: 56px; }
+}
+
+
+/* =========================================================================
+   TOUCH / DROPDOWN HARDENING
+   -------------------------------------------------------------------------
+   Mobile and tablet dropdown behaviour: a full-height scrollable panel that
+   never runs past the viewport, 44px+ tap targets, tap-to-open submenus that
+   do not depend on hover, and a locked page behind the open menu.
+   ========================================================================= */
+
+@media (max-width: 850px) {
+    .ab-nav-links {
+        top: 100%;
+        /* Fallback for browsers without dynamic viewport units. */
+        max-height: calc(100vh - var(--ab-nav-h) - 12px);
+        max-height: calc(100dvh - var(--ab-nav-h) - 12px);
+        /* navigation.js refines this against the real header position. */
+        max-height: var(--ab-nav-panel-max, calc(100dvh - var(--ab-nav-h) - 12px));
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+        padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    }
+
+    .ab-nav-menu > li > a {
+        min-height: 46px;
+        padding: 13px 4px;
+        align-items: center;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .ab-nav-menu > li.menu-item-has-children > a {
+        min-height: 46px;
+        padding-block: 13px;
+    }
+
+    .ab-nav-menu .sub-menu a {
+        display: flex;
+        min-height: 44px;
+        align-items: center;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .ab-nav-menu > li.menu-item-has-children {
+        grid-template-columns: minmax(0, 1fr) 46px;
+    }
+
+    .ab-submenu-toggle {
+        width: 46px;
+        min-height: 46px;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .ab-nav-menu li.is-submenu-open > .ab-submenu-toggle {
+        background: #eaf3f2;
+    }
+}
+
+/* Touch screens of any width never open a dropdown from a hover state. */
+@media (hover: none) {
+    .ab-nav-menu li:hover > .sub-menu {
+        display: none;
+    }
+
+    .ab-nav-menu li.is-submenu-open > .sub-menu {
+        display: block;
+    }
+
+    .ab-nav-menu > li.menu-item-has-children:hover > a::after {
+        margin-top: -4px;
+        transform: rotate(45deg);
+    }
+}
+
+/* Tablet landscape and other wide touch screens keep the desktop navigation,
+   so they get a real tap target for opening submenus. */
+@media (hover: none) and (min-width: 851px) {
+    .ab-nav-menu > li.menu-item-has-children {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 30px;
+        align-items: center;
+    }
+
+    .ab-nav-menu > li.menu-item-has-children > a {
+        display: flex;
+        min-height: 44px;
+        align-items: center;
+    }
+
+    .ab-nav-menu > li.menu-item-has-children > a::after {
+        display: none;
+    }
+
+    .ab-submenu-toggle {
+        display: inline-flex;
+        width: 30px;
+        min-height: 40px;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: #008080;
+        cursor: pointer;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .ab-submenu-toggle::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        margin-top: -4px;
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: rotate(45deg);
+        transition: transform .18s ease, margin .18s ease;
+    }
+
+    .ab-nav-menu li.is-submenu-open > .ab-submenu-toggle::before {
+        margin-top: 4px;
+        transform: rotate(225deg);
+    }
+
+    .ab-nav-menu .sub-menu .menu-item-has-children {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 30px;
+        align-items: center;
+    }
+
+    .ab-nav-menu .sub-menu .menu-item-has-children > a {
+        min-height: 44px;
+    }
+
+    .ab-nav-menu .sub-menu .menu-item-has-children > a::after {
+        display: none;
+    }
+}
+
+/* Page behind an open mobile menu must not scroll underneath it. */
+body.ab-nav-open {
+    overflow: hidden;
+    overscroll-behavior: contain;
+}
